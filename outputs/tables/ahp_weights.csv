@@ -1,0 +1,6 @@
+Indicator,Column,AHP weight
+Green cover,NDVI,0.13673150822886534
+Thermal comfort,LST,0.13673150822886532
+Blue-green share,f_bluegreen,0.07908561471391842
+15-minute accessibility,score15,0.40304795095360546
+Transit proximity,d_transit_cap,0.24440341787474543

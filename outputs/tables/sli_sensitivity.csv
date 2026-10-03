@@ -1,0 +1,12 @@
+Variant,Spearman rho vs baseline,Hexes changing quintile
+Equal weights,0.8234385131294639,811
+Green cover +20%,0.9997070037831914,30
+Green cover -20%,0.9997097171928566,32
+Thermal comfort +20%,0.9997471086183751,38
+Thermal comfort -20%,0.9997427263417036,22
+Blue-green share +20%,0.9995001122993414,48
+Blue-green share -20%,0.9995180936409722,38
+15-minute accessibility +20%,0.9989630532875178,56
+15-minute accessibility -20%,0.9981632737876717,88
+Transit proximity +20%,0.9991065278251225,66
+Transit proximity -20%,0.9987176097751952,68
