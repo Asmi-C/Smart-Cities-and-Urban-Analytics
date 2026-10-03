@@ -1,0 +1,18 @@
+# Analysis (Colab already has most of these; the notebook installs the rest)
+earthengine-api>=0.1.390
+geemap>=0.32
+osmnx>=1.9
+networkx>=3.1
+geopandas>=0.14
+shapely>=2.0
+rasterio>=1.3
+libpysal>=4.10
+esda>=2.5
+statsmodels>=0.14
+scipy>=1.10
+pandas>=2.0
+numpy>=1.24
+matplotlib>=3.7
+# Development
+jupytext>=1.16
+pytest>=7.4
