@@ -22,7 +22,7 @@
 # ## 0. Configuration
 
 # %%
-PROJECT_ID = "your-earth-engine-project-id"   # <-- change this
+PROJECT_ID = "newton-gis2"   # <-- change this
 
 YEARS = [2016, 2021, 2026]          # dry-season year label: Nov (year-1) to Feb (year)
 BOUNDARY_FILE = None                # e.g. "newtown_boundary.geojson"
