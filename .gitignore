@@ -5,9 +5,7 @@ __pycache__/
 .ipynb_checkpoints/
 .pytest_cache/
 
-# AI working notes: session handoff and the superseded NTPA / LUDCP boundary
-# investigation. Neither is part of the analysis or needed to reproduce it, and both
-# are kept locally only.
+
 handoff.md
 trashed/
 
