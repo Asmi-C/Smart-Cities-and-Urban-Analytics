@@ -1,8 +1,11 @@
-"""Minimal PDF content-stream parser for the official NKDA/NTPA plan-area map.
+"""Minimal PDF content-stream parser for the official NKDA plan-area map.
 
 The map is a true vector drawing: ~6,400 filled polygons (mouza / land-use units) plus
 labelled features, all inside a clip rectangle. There is no coordinate grid on the sheet,
-so the drawing has to be georeferenced from named features (see extract_ntpa_boundary.py).
+so the drawing has to be georeferenced from named features; see nkda_boundary.py.
+
+Note that a stroked subpath is split on every `m`, so each dash of a dotted boundary
+comes back as its own two-point ring, and some of them come back zero-length.
 
 Only the subset of PDF operators this map actually uses is implemented.
 """

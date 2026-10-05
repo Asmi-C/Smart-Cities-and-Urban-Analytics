@@ -79,8 +79,8 @@ relative to the 250 m grid. Tightening this is future work — see
 [`tools/render_sheet.py`](tools/render_sheet.py), which renders the sheet with a
 1,000-unit graticule and all 351 labels for picking better control by hand in QGIS.
 
-Earlier work on the **NTPA** and **LUDCP** boundaries was set aside as incorrect; those
-modules now live in [`trashed/`](trashed/) and are not part of the analysis.
+Earlier work on the **NTPA** and **LUDCP** boundaries was set aside as incorrect and is
+not part of this project.
 
 ## Quick start 
 
@@ -129,7 +129,6 @@ newtown-smart-city-gis/
 │   ├── pdfmap.py                           # PDF content-stream parser for the sheet
 │   └── render_sheet.py                     # render the sheet with a graticule, for hand georeferencing
 ├── boundary/                               # cached sheet + renders (map.pdf, sheet_*.png)
-├── trashed/                                # superseded NTPA / LUDCP work, kept for the record
 ├── outputs/                                # generated results
 ├── requirements.txt
 └── LICENSE

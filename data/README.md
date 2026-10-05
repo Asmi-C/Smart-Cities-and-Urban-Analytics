@@ -42,8 +42,7 @@ terciles instead.
 ## Deprecated
 
 The **NTPA** and **LUDCP** boundaries were pursued earlier and set aside as incorrect.
-Those modules are kept in [`../trashed/`](../trashed/) for the record only and are not
-used anywhere in the analysis.
+Only the NKDA area is used.
 
 ## Licences
 
