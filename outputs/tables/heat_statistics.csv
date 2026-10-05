@@ -1,9 +1,9 @@
 Statistic,Value
-"Mean pre-monsoon LST, built-up, 2026 (°C)",35.19406820516469
-"Mean pre-monsoon LST, vegetated reference, 2026 (°C)",33.60200487826982
-"Surface UHI intensity, 2026 (°C)",1.5920633268948734
-"Pearson r, LST vs NDVI (hexes)",0.06232732384763541
-"Pearson r, LST vs NDBI (hexes)",0.7595126133268681
-"OLS R², LST ~ NDVI + NDBI + MNDWI",0.7056846357727862
-Moran's I of OLS residuals,0.6391958746804235
+"Mean pre-monsoon LST, built-up, 2026 (°C)",35.17991455243986
+"Mean pre-monsoon LST, vegetated reference, 2026 (°C)",33.491298202159754
+"Surface UHI intensity, 2026 (°C)",1.6886163502801068
+"Pearson r, LST vs NDVI (hexes)",0.05849447079976884
+"Pearson r, LST vs NDBI (hexes)",0.5724303588048136
+"OLS R², LST ~ NDVI + NDBI + MNDWI",0.6270630341604824
+Moran's I of OLS residuals,0.48974140964856144
 Pseudo p-value of residual Moran's I,0.001

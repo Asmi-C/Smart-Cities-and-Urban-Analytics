@@ -12,7 +12,7 @@
 #
 # **How to run (about 15–25 minutes):**
 # 1. Open in Google Colab. Register a free Earth Engine Cloud project at https://code.earthengine.google.com/register (non-commercial / academic) and paste its ID into `PROJECT_ID` below.
-# 2. *Optional:* upload a boundary GeoJSON of the NKDA area and set `BOUNDARY_FILE`. Otherwise the notebook tries OSM, then falls back to a bounding box.
+# 2. The NKDA area boundary is already set as `BOUNDARY_FILE` in the configuration cell and is committed at `data/newtown_boundary.geojson` (29.34 km2, digitised from the official NKDA plan-area sheet by `tools/nkda_boundary.py`). Nothing to upload.
 # 3. Runtime → Run all. Everything is written to `outputs/` (figures, tables, `results.md`) and zipped at the end.
 
 # %%
@@ -25,10 +25,15 @@
 PROJECT_ID = "newton-gis2"   # <-- change this
 
 YEARS = [2016, 2021, 2026]          # dry-season year label: Nov (year-1) to Feb (year)
-BOUNDARY_FILE = None                # e.g. "newtown_boundary.geojson"
-ACTION_AREAS_FILE = None            # optional GeoJSON with a 'name' column (Action Areas I, II, III)
+# The NKDA area boundary, digitised from the official NKDA plan-area sheet by
+# tools/nkda_boundary.py. 29.34 km2, which is the statutory area in Schedule I Part A of
+# the New Town, Kolkata Development Authority Act, 2007. Regenerate with:
+#     python tools/nkda_boundary.py
+BOUNDARY_FILE = "data/newtown_boundary.geojson"
+# Optional: a GeoJSON of the three designated Action Areas (I, II, III) with a 'name'
+# column. Left unset, zones are distance-from-centroid terciles instead.
+ACTION_AREAS_FILE = None
 PLACE_QUERY = "New Town, North 24 Parganas, West Bengal, India"
-FALLBACK_BBOX = (88.430, 22.555, 88.510, 22.640)   # lon_min, lat_min, lon_max, lat_max
 
 CRS = "EPSG:32645"        # WGS 84 / UTM zone 45N, metres
 HEX_WIDTH = 250           # flat-to-flat hexagon width, m
@@ -84,8 +89,23 @@ from esda.moran import Moran, Moran_Local
 from esda.getisord import G_Local
 
 warnings.filterwarnings("ignore")
+
+# `jupyter nbconvert` runs the kernel with the notebook's own directory as the working
+# directory, so a bare "outputs" would land in notebooks/outputs. Anchor OUT to the repo
+# root (the directory holding src/ and data/) when we are inside the repository; on
+# Colab, where there is no repository, leave it relative to the working directory.
+def _anchor_out(path):
+    here = os.getcwd()
+    for base in (here, os.path.dirname(here)):
+        if os.path.isdir(os.path.join(base, "src")) and os.path.isdir(os.path.join(base, "data")):
+            return os.path.relpath(os.path.join(base, path), here)
+    return path
+
+
+OUT = _anchor_out(OUT)
 for sub in ("figures", "tables", "data"):
     os.makedirs(f"{OUT}/{sub}", exist_ok=True)
+print(f"Writing outputs to {os.path.abspath(OUT)}")
 
 
 def make_hex_grid(boundary_proj, width=250.0):
@@ -242,19 +262,46 @@ ox.settings.use_cache = True
 ox.settings.log_console = False
 
 
+def resolve_boundary_path(path):
+    """Find the committed boundary whether we run from the repo root or from notebooks/.
+
+    `jupyter nbconvert` executes with the notebook's own directory as the working
+    directory, so a bare "data/..." path does not resolve there.
+    """
+    if os.path.isabs(path) or os.path.exists(path):
+        return path
+    here = os.getcwd()
+    for cand in (os.path.join(here, "..", path),
+                 os.path.join(here, path),
+                 os.path.join(here, "..", "..", path)):
+        if os.path.exists(cand):
+            return os.path.normpath(cand)
+    return path
+
+
 def load_boundary():
+    """Load the NKDA boundary. The digitised file is the expected path; the rest are
+    last-resort fallbacks and say so loudly when they are used."""
     if BOUNDARY_FILE:
-        return gpd.read_file(BOUNDARY_FILE).to_crs(4326)[["geometry"]].dissolve(), f"user file ({BOUNDARY_FILE})"
+        p = resolve_boundary_path(BOUNDARY_FILE)
+        if not os.path.exists(p):
+            raise FileNotFoundError(
+                f"BOUNDARY_FILE={BOUNDARY_FILE!r} not found (tried {p!r}). "
+                "Run `python tools/nkda_boundary.py` to regenerate it.")
+        g = gpd.read_file(p).to_crs(4326)[["geometry"]].dissolve()
+        return g, f"NKDA boundary digitised from the official plan-area sheet ({os.path.basename(p)})"
     try:
         g = ox.geocode_to_gdf(PLACE_QUERY)
         area = g.to_crs(CRS).area.iloc[0] / 1e6
         if g.geom_type.iloc[0] in ("Polygon", "MultiPolygon") and 15 <= area <= 60:
-            return g[["geometry"]].dissolve(), f"OpenStreetMap geocode ({area:.1f} km²)"
+            return g[["geometry"]].dissolve(), f"WARNING not the NKDA boundary: OSM geocode ({area:.1f} km²)"
         print(f"Geocoded polygon is {area:.1f} km², outside the plausible 15–60 km² range.")
     except Exception as e:
         print("Geocoding failed:", e)
-    print("Using the fallback bounding box. Replace it with a digitised NKDA boundary when you can.")
-    return gpd.GeoDataFrame(geometry=[box(*FALLBACK_BBOX)], crs=4326), "fallback bounding box"
+    print("WARNING using a fallback bounding box, not the NKDA boundary. "
+          "Run tools/nkda_boundary.py and set BOUNDARY_FILE.")
+    return gpd.GeoDataFrame(geometry=[box(88.430, 22.555, 88.510, 22.640)], crs=4326), \
+        "WARNING fallback bounding box"
 
 
 boundary, BOUNDARY_SOURCE = load_boundary()
@@ -541,7 +588,7 @@ for key, tags in SERVICES.items():
     dist = nx.multi_source_dijkstra_path_length(Gu, sources, weight="length")
     H[f"d_{key}"] = [dist.get(n, np.inf) for n in hex_nodes]
     poi_counts[key] = len(pois)
-    poi_layers.append(gpd.GeoDataFrame({"service": key}, geometry=pts, crs=CRS))
+    poi_layers.append(gpd.GeoDataFrame({"service": [key] * len(pts)}, geometry=list(pts), crs=CRS))
     print(f"{key}: {len(pois)} features")
 
 H["score15"] = sum((H[f"d_{k}"] <= WALK_M).astype(float) for k in SERVICES) / len(SERVICES)
@@ -768,10 +815,14 @@ Consistency ratio: {CR:.3f}.
 """
 with open(f"{OUT}/results.md", "w") as fh:
     fh.write(report)
-shutil.make_archive("newtown_outputs", "zip", OUT)
+# Zip next to OUT rather than in the working directory: under nbconvert the working
+# directory is notebooks/, which would otherwise drop the zip inside the source tree.
+# In Colab OUT is relative to the working directory, so the zip still lands there.
+ZIP_BASE = os.path.join(os.path.dirname(os.path.abspath(OUT)), "newtown_outputs")
+shutil.make_archive(ZIP_BASE, "zip", OUT)
 print(report)
 try:
     from google.colab import files
-    files.download("newtown_outputs.zip")
+    files.download(os.path.basename(ZIP_BASE) + ".zip")
 except Exception:
-    print("Outputs zipped to newtown_outputs.zip")
+    print(f"Outputs zipped to {os.path.basename(ZIP_BASE)}.zip")
