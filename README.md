@@ -101,9 +101,8 @@ The extension challenges the naive use of the base layer for planning claims:
    640 m boundary-stable core. Joint hot + poor-access targeting is **withheld** until
    an authoritative boundary exists. (`round11_planning_screen_sensitivity.csv`, slide 21)
 
-Everything the deck reports maps to committed tables — see
-`docs/REPRODUCIBILITY_AND_DATA.md` for the table→slide map and the exclusion list
-(reviewer material is not published here).
+Every number above maps to a committed table under `outputs/tables/`; nothing the
+deck reports requires re-running the satellite pipeline.
 
 ## How to run
 
@@ -129,17 +128,20 @@ the configuration cell):
 jupyter lab notebooks/newtown_smart_city_analysis.ipynb   # Runtime → Run all
 ```
 
-See **docs/REPRODUCIBILITY_AND_DATA.md** for what is and is not re-runnable, the
-frozen-outputs policy, and the 2026-11-05 verification log.
+What is reproducible, what is not: the offline pipelines and `run_round11.sh` exit 0
+and reproduce the deck's D3 coverage exactly (verified 2026-11-05). The EE notebook
+from scratch is not bit-reproducible (Dynamic World and OSM are live collections);
+the committed `outputs/` are the reference record. Internal review/scoring material
+is deliberately not published here.
 
 ## Study area and boundary (honesty notice)
 
 The NKDA boundary is the statutory 29.34 km² planning area (Schedule I Part A, NKDA
 Act 2007). It was digitised from the official (unregistered, no coordinate grid)
 plan-area sheet via `tools/nkda_boundary.py`; registration RMS ≈ **640 m** (max 962 m;
-rigid transform — internal metrics are unaffected, edge membership is not; see
-`docs/BOUNDARY_VALIDATION.md`). Hexagons whose membership depends on the boundary are
-treated as uncertain everywhere in the planning analysis.
+rigid transform — internal metrics are unaffected, edge membership is not). Hexagons
+whose membership depends on the boundary are treated as uncertain everywhere in the
+planning analysis.
 
 ## Limitations
 

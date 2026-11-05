@@ -1,1 +1,0 @@
-Combined RF spatial CV: R² 0.527, RMSE 0.876°C; random CV RMSE 0.726°C. Morphology-only RF: spatial RMSE 0.875°C. 79 / 537 hexes consistently appear in bottom quintile in at least 80% of weighting scenarios.
