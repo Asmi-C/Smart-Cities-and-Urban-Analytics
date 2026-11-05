@@ -1,0 +1,6 @@
+category,hexes,population_2020_proxy,warning
+common_six_date_clear,207,32669.36368224761,WorldPop 2020 model; OSM cache; unregistered boundary
+persistent_at_least_3_of_6,42,8545.773568308587,WorldPop 2020 model; OSM cache; unregistered boundary
+persistent_at_least_4_of_6,33,6821.280059225418,WorldPop 2020 model; OSM cache; unregistered boundary
+persistent_3of6_plus_poor_access,4,219.0838797943265,WorldPop 2020 model; OSM cache; unregistered boundary
+2026_only_hot,5,722.4258719724768,WorldPop 2020 model; OSM cache; unregistered boundary

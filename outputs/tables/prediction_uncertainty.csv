@@ -1,0 +1,2 @@
+scheme,nominal_coverage,empirical_coverage,mean_interval_width_C,n_test,guarantee
+1km spatial outer CV; inner group calibration,0.9,0.9143389199255121,2.9295384040728694,537,No finite-sample guarantee under spatial distribution shift

@@ -1,0 +1,2 @@
+dates,mean_delta_R2,median_delta_R2,wins,bootstrap_CI_low,bootstrap_CI_high,exact_date_signflip_p,wilcoxon_p,mean_delta_vs_spatial_climatology_R2,wins_over_spatial_climatology,independent_calendar_years,year_cluster_bootstrap_CI_low,year_cluster_bootstrap_CI_high,year_cluster_signflip_p
+15,0.13472862590092344,0.14246020401607062,15,0.1147877329406641,0.1540007686577985,6.103515625e-05,6.103515625e-05,0.013460156077643422,8,8,0.11374726924181829,0.16744423255888563,0.0078125

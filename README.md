@@ -1,176 +1,159 @@
-# Smart Cities and Urban Analytics Using Spatial Data — New Town Kolkata
+# Smart Cities and Urban Analytics using Spatial Data — New Town Kolkata (NKDA)
 
 Term project for the **Geographic Information Systems** course at **IIT Kharagpur**.
+**Group 9:** Choudhary Asmi Aashay (23CS30061) · Maddipatla Sai Sravan (23CS10041) ·
+Pachva Shiva Rama Krishna (23CS30037)
 
-An open-data GIS framework that measures how liveable a planned Indian smart city is,
-using **New Town Kolkata** as the case. It combines satellite remote sensing,
-street-network analysis and spatial statistics on a common 250 m hexagonal grid and
-condenses them into a **Smart Liveability Index (SLI)**.
+An open-data GIS framework that measures how liveable a planned Indian smart city is —
+**New Town–Rajarhat (the NKDA statutory area, 29.34 km², Kolkata)** — using satellite
+remote sensing, walk-network analysis and spatial statistics on a common 250 m hexagonal
+grid (537 cells, EPSG:32645), condensed into a **Smart Liveability Index (SLI)**. The
+repository also contains the **NKDA GeoAI research extension**: a rigorous test of
+whether the urban-heat model survives unseen dates and unseen areas.
+
+> **The one-line result:** date-only validation overstates model transfer by
+> **0.10–0.40 R²** — the same direction on **Landsat-8 and Landsat-9** and in
+> **all 64 holdout-shape combinations** tried; confirmed on five Landsat-9 dates
+> fixed before their temperatures were read. Full evidence in `outputs/tables/`,
+> the IEEE draft in `paper/`, and the write-up of what does and does not work.
+
+---
 
 ## Research questions
 
-1. **RQ1:** How much has built-up area grown since 2016, and what land covers did it replace?
-2. **RQ2:** How strongly is land surface temperature associated with built-up density and vegetation?
-3. **RQ3:** What share of residents can reach five essential services within a 15-minute walk?
-4. **RQ4:** Are liveability deficits spatially clustered, and where are the hot spots?
+| # | Question | Short answer |
+|---|---|---|
+| RQ1 | How much skill survives a geographic holdout within one date? | Tree models lose 0.09–0.10 R² vs random CV; OLS loses 0.03 |
+| RQ2 | Does absolute LST transfer across dates — and is a relative (anomaly) target better? | Absolute LST: negative R² on every held-out date. Anomaly: positive on all 15 |
+| RQ3 | How much does date-only testing overstate joint (date + area) transfer? | 0.10–0.40 R² depending on model and holdout shape |
+| RQ4 | Does the gap hold on a second sensor and other holdout shapes? | Yes — 5/5 frozen Landsat-9 dates; every one of 64 CIs excludes 0 |
+| RQ5 | Which planning conclusions survive boundary and threshold uncertainty? | Persistent heat in the boundary-stable core survives; joint hot-+-poor-access targeting is withheld |
 
-## Workflow
+## Project layout
 
-```mermaid
-flowchart TD
-    S2[Sentinel-2<br/>10 m, dry season] --> A
-    DW[Dynamic World<br/>training labels] --> A
-    L[Landsat 8/9<br/>thermal, pre-monsoon] --> B
-    OSM[OpenStreetMap<br/>walk network + services] --> C
-    WP[WorldPop<br/>100 m population] --> C
-    A[A. Land cover<br/>Random Forest, built-up growth] --> G
-    B[B. Heat island<br/>LST, SUHI, regression] --> G
-    C[C. 15-minute accessibility<br/>network shortest paths] --> G
-    G[250 m hexagonal grid<br/>zonal statistics] --> SLI[Smart Liveability Index<br/>AHP weights + sensitivity]
-    SLI --> D[D. Spatial clustering<br/>Moran's I, LISA, Gi*]
-    D --> O[Maps, tables and<br/>priority zones]
+```text
+notebooks/ + src/     the base pipeline as notebook (Colab/Jupyter) and plain script
+tests/                12 offline unit tests (synthetic data)
+data/                 NKDA boundary GeoJSON; scene manifests; ERA5-Land context
+boundary/             official NKDA plan-area sheet (PDF) + renders
+outputs/              results.md; 134 tables; figures (maps + PPT figures); geopackages
+external_case/        Landsat STAC discovery/fetch + every multi-date experiment
+tools/                boundary digitiser, audits, Round-specific scripts
+run_*.py, run_round11.sh   one-command replays (offline)
+docs/                 validation notes, evidence ledgers, protocols
+paper/                IEEE drafts, claim→evidence maps, references.bib
 ```
 
-| Module | Method | Data |
-| --- | --- | --- |
-| A — Land cover | Random Forest (100 trees) on Sentinel-2 bands + NDVI/NDBI/MNDWI, trained on high-confidence Dynamic World pixels; transition matrix | Sentinel-2, Dynamic World, ESA WorldCover (check) |
-| B — Heat island | Landsat C2 L2 surface temperature, surface UHI intensity, UTFVI, OLS of LST on spectral indices | Landsat 8/9 |
-| C — Accessibility | OSMnx walk network, multi-source Dijkstra to schools, health, parks, transit and shops; 15 min = 1,200 m | OpenStreetMap, WorldPop |
-| D — Index and clustering | AHP-weighted SLI (CR < 0.10), ±20% weight sensitivity, Global Moran's I, LISA and Getis-Ord Gi* with FDR control | Outputs of A–C |
+## 1) The base pipeline (Stage 1)
 
-## Study area: the NKDA area (29.34 km²)
+A → B → C → D, from free open data:
 
-The study area is the **New Town Kolkata Development Authority (NKDA) area**, 29.34 km²,
-which is the statutory area defined in Schedule I Part A of the New Town, Kolkata
-Development Authority Act, 2007 (24 mouza parts). The boundary is committed at
-[`data/newtown_boundary.geojson`](data/newtown_boundary.geojson) and is already set as
-`BOUNDARY_FILE` in the configuration cell.
-
-It was digitised from the only published drawing of that area, the official NKDA
-plan-area sheet (`maps-of-new-town-planning-area.pdf` on nkdamar.org), by
-[`tools/nkda_boundary.py`](tools/nkda_boundary.py):
-
-```bash
-python tools/nkda_boundary.py --report     # regenerate + print scale and registration
+```text
+Sentinel-2 (dry season) ─┐
+Dynamic World (labels) ──┼─► A. Random-Forest land cover (100 trees) ─► maps, areas
+Landsat C2 L2 (T1_L2) ───┤
+                         ├─► B. LST + surface UHI + OLS (R² = 0.627) ─► heat map
+OpenStreetMap (walk) ────┤
+                         ├─► C. multi-source Dijkstra to 5 services ──► 15-min scores
+WorldPop 2020 (100 m) ───┤
+                         └─► D. AHP Smart Liveability Index (CR = 0.007) ─► clusters
 ```
 
-| Step | Result |
-| --- | --- |
-| Boundary style | blue `(0, 0, 1)` width 19, layer 6, confirmed against the sheet's own legend swatch |
-| Extraction | 3,977 usable dashes (3,976 zero-length parser artefacts discarded), chained in stream order into one closed ring of 4,931 points, closure gap 4.12 units |
-| Scale | **1.5663 m per PDF unit**, from `sqrt(29.34 × 10⁶ / 11,959,630 units²)` |
-| Registration | rotation **89.36°**, translation solved against 5 OpenStreetMap ground-control points |
-| Registration residuals | RMS **640 m**, max 962 m |
-| Area check | **29.242 km²** on the UTM 45N grid, −0.33 % against the statutory 29.34 km² |
-| Extent | 8.59 × 10.42 km |
-| Spot checks | Eco Park inside; Rajarhat, Baguiati, Dum Dum, Ultadanga outside |
+| Module | Method | Outputs |
+|---|---|---|
+| A — Land cover | RF on 9 bands + NDVI/NDBI/MNDWI; trained on high-confidence Dynamic World; transitions vs 2016/2021/2026 | lulc_*.csv, 04–06 figures |
+| B — Heat | Landsat-8/9 C2 L2 `ST_B10` (scale 0.00341802, offset 149 K), QA_PIXEL mask | heat_statistics.csv, 05 figure |
+| C — Access | OSMnx walk graph; 1,200 m = 15 min @ 4.8 km/h | accessibility*.csv, 07–08 figures |
+| D — Index & clusters | AHP weights, ±20 % sensitivity, Moran's I / LISA / Gi* with BH-FDR | sli_*.csv, spatial_clustering.csv, 09–12 figures |
 
-The scale is also probed independently of the area assumption, by asking which value
-makes the OSM control points line up best: that optimum is 1.66 m/unit, 17 % above the
-area-derived value, which is within the noise of label-anchor placement and confirms the
-scale to roughly ±6 %.
+Headline numbers (see `outputs/results.md`): surface UHI 1.69 °C (2026); 2.2% of
+residents reach all five services in 15 minutes (11.9% at 20 min; 0.0% at 10 min);
+walk-access deficit is concentrated at the edge (mean score 0.29 vs ~0.5 core);
+87 Low-Low SLI hexagons (~12,649 residents, WorldPop modelled).
 
-**Known limitation.** The sheet is an unregistered CAD plot with no coordinate grid, so
-ground control can only come from place labels, and the drafter placed those labels
-0.5–1 km from the settlements they name. That sets a **~640 m** floor on the absolute
-placement. It is a rigid transform, so area, shape and every internal metric are
-unaffected; only absolute position shifts, which moves the set of edge hexes included
-relative to the 250 m grid. Tightening this is future work — see
-[`tools/render_sheet.py`](tools/render_sheet.py), which renders the sheet with a
-1,000-unit graticule and all 351 labels for picking better control by hand in QGIS.
+**Stage-1 metrics are committed** — the raw Sentinel-2/Dynamic World inputs are live
+collections, so a fresh run will not reproduce them exactly (see "Reproducibility").
 
-Earlier work on the **NTPA** and **LUDCP** boundaries was set aside as incorrect and is
-not part of this project.
+## 2) The research extension (Stages 2–6)
 
-## Quick start 
+The extension challenges the naive use of the base layer for planning claims:
 
-1. Register a free Earth Engine Cloud project for non-commercial use:
-   https://code.earthengine.google.com/register
-2. Click **Open in Colab** above (or upload `notebooks/newtown_smart_city_analysis.ipynb`).
-3. In the configuration cell, set `PROJECT_ID` to your Earth Engine project ID.
-4. `BOUNDARY_FILE` already points at the committed NKDA boundary — nothing to upload.
-5. **Runtime → Run all.** A zip of every output downloads at the end.
+1. **Within one date, random CV flatters.** Spatial CV (1 km blocks, 5 folds over 52
+   geographic blocks): tree models lose ~0.09–0.10 R²; coordinates-only falls
+   0.47 → 0.08. (`spatial_cv_results.csv`, deck slide 11)
+2. **Absolute LST does not transfer across dates.** Negative R² on every held-out
+   date; anomaly (relative) heat does better. (`date_level_method_comparison.csv`, slide 12)
+3. **Date-only testing overstates joint transfer.** D0–D3 regimes (random / new-area /
+   new-date / new-date-and-new-area). Landsat-8: D2→D3 drops 0.515–0.687 R² (sign-flip
+   p = 0.0078). Landsat-9 (5 dates, frozen in advance): drops 0.315–0.477 on all five
+   dates; p = 0.0625 (smallest possible at n = 5). (`domain_shift_model_matrix.csv`,
+   `round10_landsat9_confirmatory.csv`, slides 13–14)
+4. **The gap is not an artefact of how the map is cut.** Eight holdout shapes
+   (1/2 km blocks × 2 grid origins × ±500 m buffer) × 4 models × 2 sensors =
+   **64 CIs, all positive**; 639/640 single-date gaps positive. (`round11_optimism_summary.csv`, slide 15)
+5. **Residual spatial structure persists.** Moran's I 0.22–0.63 across all
+   dates/models/weights; accounted for by block resampling in the statistics, never
+   "modelled away" (all p ≤ 0.002). (`round11_residual_moran.csv`, slide 19)
+6. **Intervals are approximate.** Nominal 90% conformal intervals cover 0.899
+   (pooled) / 0.937 (date-cluster) on average; worst date 0.667 / 0.711. (slide 20)
+7. **Planning survives only partly.** Persistent heat (≥ half of 15 dates): 46
+   hexagons, ~7,993 residents — 18 hexagons (~3,635 residents, 18.7%) inside the
+   640 m boundary-stable core. Joint hot + poor-access targeting is **withheld** until
+   an authoritative boundary exists. (`round11_planning_screen_sensitivity.csv`, slide 21)
 
-### Running locally
+Everything the deck reports maps to committed tables — see
+`docs/REPRODUCIBILITY_AND_DATA.md` for the table→slide map and the exclusion list
+(reviewer material is not published here).
+
+## How to run
 
 ```bash
-python -m venv .venv && source .venv/bin/activate
+python3.12 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-earthengine authenticate
-cd notebooks && jupyter lab newtown_smart_city_analysis.ipynb
+
+# offline checks
+python -m pytest tests/ -q          # 12 passed
+python run_research_pipeline.py     # spatial CV, ablations, priority stability
+python run_ieee_experiments.py      # validation matrix, diagnostics, uncertainty
+python run_submission_tests.py      # residual structure, geographic transfer
+
+# full replay from the committed cached satellite tables (~25 min on 2 CPUs)
+bash run_round11.sh
 ```
 
-## Outputs
-
-Everything is written to `outputs/`:
-
-| Path | Contents |
-| --- | --- |
-| `outputs/results.md` | All results tables in the report's Section 7 layout |
-| `outputs/tables/*.csv` | Accuracy, F1, areas, transition matrix, LST/UHI, OLS, accessibility, AHP, sensitivity, clustering |
-| `outputs/figures/*.png` | Study area, land-cover maps, built-up change, LST, NDVI–LST scatter, service distances, 15-minute score, SLI quintiles, LISA and Gi* maps |
-| `outputs/data/hex_results.gpkg` | Hexagon layer with every indicator, the SLI and cluster labels (open in QGIS) |
-
-## Repository structure
-
-```
-newtown-smart-city-gis/
-├── notebooks/
-│   └── newtown_smart_city_analysis.ipynb   # run this
-├── src/
-│   └── newtown_smart_city_analysis.py      # same notebook as a plain script (jupytext py:percent)
-├── tests/
-│   └── test_helpers.py                     # offline tests for grid, AHP, SLI, FDR, clustering, maps
-├── data/
-│   ├── newtown_boundary.geojson            # the NKDA area, 29.34 km2 (committed)
-│   └── README.md                           # boundary provenance and data licences
-├── tools/
-│   ├── nkda_boundary.py                    # digitise + register + validate the NKDA boundary
-│   ├── pdfmap.py                           # PDF content-stream parser for the sheet
-│   └── render_sheet.py                     # render the sheet with a graticule, for hand georeferencing
-├── boundary/                               # cached sheet + renders (map.pdf, sheet_*.png)
-├── outputs/                                # generated results
-├── requirements.txt
-└── LICENSE
-```
-
-## Development
-
-The notebook and `src/` script are paired with jupytext. After editing either one:
+For the base notebook (needs a Google Earth Engine project — register at
+<https://earthengine.google.com/> for non-commercial use, then set `PROJECT_ID` in
+the configuration cell):
 
 ```bash
-jupytext --sync notebooks/newtown_smart_city_analysis.ipynb   # or edit the .py and run:
-jupytext --to ipynb src/newtown_smart_city_analysis.py -o notebooks/newtown_smart_city_analysis.ipynb
-pytest -q
+jupyter lab notebooks/newtown_smart_city_analysis.ipynb   # Runtime → Run all
 ```
 
-The tests exercise everything that does not need network access (hexagon grid,
-AHP, index, sensitivity analysis, Benjamini–Hochberg correction, spatial statistics
-and map rendering) on synthetic data. Earth Engine and OpenStreetMap steps are
-exercised only when the notebook runs.
+See **docs/REPRODUCIBILITY_AND_DATA.md** for what is and is not re-runnable, the
+frozen-outputs policy, and the 2026-11-05 verification log.
+
+## Study area and boundary (honesty notice)
+
+The NKDA boundary is the statutory 29.34 km² planning area (Schedule I Part A, NKDA
+Act 2007). It was digitised from the official (unregistered, no coordinate grid)
+plan-area sheet via `tools/nkda_boundary.py`; registration RMS ≈ **640 m** (max 962 m;
+rigid transform — internal metrics are unaffected, edge membership is not; see
+`docs/BOUNDARY_VALIDATION.md`). Hexagons whose membership depends on the boundary are
+treated as uncertain everywhere in the planning analysis.
 
 ## Limitations
 
-- **Accuracy is relative to Dynamic World.** Training and validation labels come from Dynamic World, so accuracy measures agreement with that product, not field truth. ESA WorldCover 2021 is reported as an independent comparison.
-- **Boundary placement carries ~640 m of registration error.** The official sheet is an unregistered CAD plot with no coordinate grid, so ground control had to come from place labels placed 0.5–1 km from the settlements they name. Area, shape and all internal metrics are unaffected because the transform is rigid, but absolute position shifts by up to ~1 km, which changes which edge hexes fall inside the 250 m grid. Better control can be hand-picked against `boundary/sheet_annotated.png`; see [`tools/render_sheet.py`](tools/render_sheet.py).
-- **LST** is daytime surface temperature (~10:30 a.m. overpass) at native 100 m thermal resolution, not air temperature.
-- **OSM completeness** varies, and WorldPop is modelled population.
-- **AHP weights** reflect the group's judgement; the sensitivity analysis reports how much the ranking depends on them.
+- LST ≠ air temperature; anomaly (relative) heat is the transferable target, and it
+  needs the observed scene mean — **not** absolute forecasting.
+- One township only; no independent second city yet; only 5 confirmation dates.
+- Residual spatial dependence is not modelled; intervals undercover the worst date.
+- Dynamic-World-circular land-cover accuracy; ESA WorldCover agreement ≈ 44% —
+  land-cover trend claims were dropped accordingly.
+- Screening indicators only — no intervention effects, no parcel-level advice.
 
+## Licences
 
-
-## Key references
-
-- Anselin, L. (1995). Local indicators of spatial association — LISA. *Geographical Analysis*, 27(2), 93–115.
-- Boeing, G. (2017). OSMnx. *Computers, Environment and Urban Systems*, 65, 126–139.
-- Brown, C. F., et al. (2022). Dynamic World. *Scientific Data*, 9, 251.
-- Getis, A., & Ord, J. K. (1992). *Geographical Analysis*, 24(3), 189–206.
-- Gorelick, N., et al. (2017). Google Earth Engine. *Remote Sensing of Environment*, 202, 18–27.
-- Moreno, C., et al. (2021). Introducing the "15-minute city". *Smart Cities*, 4(1), 93–111.
-- Saaty, T. L. (1980). *The Analytic Hierarchy Process*. McGraw-Hill.
-- New Town, Kolkata Development Authority Act, 2007, Schedule I Part A (definition of the NKDA area).
-
-
-## License
-
-Code: MIT (see [`LICENSE`](LICENSE)). Data remain under their original licences (see [`data/README.md`](data/README.md)).
+Code: MIT (see `LICENSE`). Data keep their original licences: Sentinel-2 (Copernicus),
+Landsat (USGS, public domain), Dynamic World & ESA WorldCover & WorldPop (CC BY 4.0),
+OpenStreetMap (ODbL, © OpenStreetMap contributors), NKDA plan-area sheet (public
+government publication).

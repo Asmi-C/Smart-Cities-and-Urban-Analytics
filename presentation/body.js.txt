@@ -1,0 +1,463 @@
+
+// citation helper: small grey source line at the bottom of a content slide
+function cite(s, text) {
+  s.addText(text, { x: 0.6, y: 6.6, w: 11.6, h: 0.32, fontSize: 10, color: GREY, isTextBox: true, margin: 0 });
+}
+function heading(s, text, x, y, w, color = NAVY) {
+  s.addText(text, { x, y, w, h: 0.45, fontSize: 19, bold: true, color, isTextBox: true, margin: 0 });
+}
+
+// beige title layout, recreated from the supplied template
+const BEIGE = BG, FRAME = "D6CBB5", OLIVE = "5B4B33", GOLD = "C99700", SAND = "C9BEA6";
+pres.defineSlideMaster({ title: "COVER", background: { color: BEIGE }, objects: [] });
+
+// 1 Cover --------------------------------------------------------------------
+pres.addSection({ title: "Introduction" });
+let s = pres.addSlide({ masterName: "COVER", sectionTitle: "Introduction" });
+s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.35, y: 0.3, w: 12.63, h: 6.9, rectRadius: 0.12, fill: { color: BEIGE }, line: { color: FRAME, width: 1 } });
+s.addText("GIS TERM PROJECT  ·  IIT KHARAGPUR", { x: 0.95, y: 1.0, w: 6, h: 0.3, fontSize: 11, bold: true, color: GOLD, charSpacing: 2, isTextBox: true, margin: 0 });
+s.addText("Smart Cities and Urban Analytics using Spatial Data", { x: 0.95, y: 1.55, w: 6.4, h: 2.1, fontFace: "Cambria", fontSize: 36, bold: true, color: OLIVE, valign: "top", isTextBox: true, margin: 0 });
+s.addShape(pres.shapes.LINE, { x: 0.95, y: 3.85, w: 3.6, h: 0, line: { color: GOLD, width: 1.25 } });
+s.addText("Date-only validation overstates urban heat model transfer: a cross-sensor study of New Town (NKDA), Kolkata", { x: 0.95, y: 4.05, w: 6.2, h: 1.0, fontSize: 17, color: "6B5E4A", valign: "top", isTextBox: true, margin: 0 });
+s.addText("Landsat 8 and 9  ·  2018 – 2026  ·  November 2026", { x: 0.95, y: 4.95, w: 6.2, h: 0.3, fontSize: 11, italic: true, color: "6B5E4A", isTextBox: true, margin: 0 });
+s.addText([
+  { text: "Submitted by Group 9", options: { bold: true, color: GOLD, fontSize: 12, breakLine: true } },
+  { text: "Choudhary Asmi Aashay (23CS30061)", options: { breakLine: true } },
+  { text: "Maddipatla Sai Sravan (23CS10041)", options: { breakLine: true } },
+  { text: "Pachva Shiva Rama Krishna (23CS30037)" },
+], { x: 0.95, y: 5.4, w: 6.2, h: 1.15, fontSize: 13, color: OLIVE, valign: "top", paraSpaceAfter: 2, isTextBox: true, margin: 0 });
+s.addShape(pres.shapes.OVAL, { x: 0.95, y: 6.6, w: 0.38, h: 0.38, fill: { color: "F8E9A8" }, line: { color: GOLD, width: 0.75 } });
+s.addText("01", { x: 0.95, y: 6.6, w: 0.38, h: 0.38, fontSize: 9, bold: true, color: OLIVE, align: "center", valign: "middle", isTextBox: true, margin: 0 });
+s.addText("SPATIAL CV   ·   TEMPORAL TRANSFER   ·   PLANNING CHECK", { x: 1.45, y: 6.62, w: 5.5, h: 0.34, fontSize: 9, color: "6B5E4A", charSpacing: 1, valign: "middle", isTextBox: true, margin: 0 });
+// illustration: sun, buildings, trees
+s.addShape(pres.shapes.OVAL, { x: 8.1, y: 0.95, w: 3.6, h: 3.6, fill: { color: "F8E9A8" }, line: { color: "F8E9A8" } });
+s.addShape(pres.shapes.OVAL, { x: 10.25, y: 1.0, w: 1.05, h: 1.05, fill: { color: "F2B705" }, line: { color: "F2B705" } });
+[[10.78, 0.72, 10.78, 0.88], [10.78, 2.17, 10.78, 2.33], [9.97, 1.52, 10.13, 1.52], [11.42, 1.52, 11.58, 1.52], [10.2, 0.95, 10.31, 1.06], [11.25, 2.0, 11.36, 2.11], [11.36, 0.95, 11.25, 1.06], [10.31, 2.0, 10.2, 2.11]].forEach(([x1, y1, x2, y2]) => {
+  s.addShape(pres.shapes.LINE, { x: Math.min(x1, x2), y: Math.min(y1, y2), w: Math.abs(x2 - x1), h: Math.abs(y2 - y1), flipH: (x2 < x1) !== (y2 < y1), line: { color: "F2B705", width: 1.5 } });
+});
+s.addShape(pres.shapes.OVAL, { x: 7.7, y: 5.55, w: 5.0, h: 0.5, fill: { color: SAND }, line: { color: SAND } });
+// house
+s.addShape(pres.shapes.RECTANGLE, { x: 7.95, y: 3.55, w: 1.25, h: 2.2, fill: { color: "CFC6B4" }, line: { color: "B5AA94", width: 0.75 } });
+s.addShape(pres.shapes.ISOSCELES_TRIANGLE, { x: 7.8, y: 2.85, w: 1.55, h: 0.75, fill: { color: "F2B705" }, line: { color: "E0A800" } });
+[[8.15, 3.85], [8.7, 3.85], [8.15, 4.55], [8.7, 4.55]].forEach(([x, y]) => s.addShape(pres.shapes.RECTANGLE, { x, y, w: 0.32, h: 0.4, fill: { color: "E6DFD0" }, line: { color: "B5AA94", width: 0.5 } }));
+// tall block
+s.addShape(pres.shapes.RECTANGLE, { x: 9.35, y: 2.3, w: 1.6, h: 3.45, fill: { color: "EFE8DA" }, line: { color: "B5AA94", width: 0.75 } });
+s.addShape(pres.shapes.RECTANGLE, { x: 9.5, y: 2.12, w: 1.3, h: 0.2, fill: { color: "E2D7BF" }, line: { color: "B5AA94", width: 0.5 } });
+for (let r = 0; r < 4; r++) for (let c = 0; c < 3; c++)
+  s.addShape(pres.shapes.RECTANGLE, { x: 9.55 + c * 0.45, y: 2.55 + r * 0.7, w: 0.3, h: 0.42, fill: { color: "FAF7F1" }, line: { color: "B5AA94", width: 0.5 } });
+// small block
+s.addShape(pres.shapes.RECTANGLE, { x: 11.1, y: 3.7, w: 1.0, h: 2.05, fill: { color: "B9AE98" }, line: { color: "A0957F", width: 0.75 } });
+[[11.25, 3.95], [11.62, 3.95], [11.25, 4.6], [11.62, 4.6]].forEach(([x, y]) => s.addShape(pres.shapes.RECTANGLE, { x, y, w: 0.24, h: 0.35, fill: { color: "D9D1C0" }, line: { color: "A0957F", width: 0.5 } }));
+// trees
+[[7.55, 4.55, 0.65], [12.05, 4.6, 0.6]].forEach(([x, y, d]) => {
+  s.addShape(pres.shapes.RECTANGLE, { x: x + d / 2 - 0.04, y: y + d - 0.1, w: 0.08, h: 0.75, fill: { color: "7A6A4F" }, line: { color: "7A6A4F" } });
+  s.addShape(pres.shapes.OVAL, { x, y, w: d, h: d, fill: { color: "8E9068" }, line: { color: "8E9068" } });
+});
+s.addText([{ text: "Code: github.com/Asmi-C/Smart-Cities-and-Urban-Analytics (branch nkda-implementation1)", options: { hyperlink: { url: "https://github.com/Asmi-C/Smart-Cities-and-Urban-Analytics/tree/nkda-implementation1", tooltip: "Project repository" }, color: "6B5E4A" } }], { x: 7.4, y: 6.62, w: 5.4, h: 0.34, fontSize: 9, align: "center", valign: "middle", isTextBox: true, margin: 0 });
+s.addText("COOL ROOFS  ·  SHADE  ·  TREES  ·  SAFE REST", { x: 8.0, y: 6.15, w: 4.6, h: 0.3, fontSize: 9, color: "6B5E4A", align: "center", charSpacing: 1, isTextBox: true, margin: 0 });
+s.addNotes("Project title, then the specific question we studied inside it.");
+
+// 2 Outline
+s = slide("Outline", "Introduction");
+[["1", "Problem and research questions"], ["2", "Study area, data and experiment roadmap"], ["3", "Validation set-up: D0 to D3"],
+ ["4", "Results: spatial CV, temporal transfer, joint shift"], ["5", "Landsat-9 confirmation and robustness checks"],
+ ["6", "Uncertainty, residual structure and planning check"], ["7", "Comparison with published work, limitations, next steps"]].forEach((o, i) => {
+  const y = 1.45 + i * 0.68;
+  s.addShape(pres.shapes.OVAL, { x: 0.9, y, w: 0.5, h: 0.5, fill: { color: i < 4 ? NAVY : ORANGE } });
+  s.addText(o[0], { x: 0.9, y, w: 0.5, h: 0.5, fontSize: 16, bold: true, color: i < 4 ? "FFFFFF" : NAVY, align: "center", valign: "middle", isTextBox: true, margin: 0 });
+  s.addText(o[1], { x: 1.6, y, w: 10, h: 0.5, fontSize: 18, color: "3E3426", valign: "middle", isTextBox: true, margin: 0 });
+});
+
+// 3 Problem
+s = slide("Why validation design matters for urban heat maps", "Introduction");
+heading(s, "The problem", 0.6, 1.35, 6.3);
+bullets(s, [
+  "Heat maps from Landsat are used to screen areas that have no thermal label, often on a new date",
+  "Most urban LST studies test on random pixels or on held-out dates only",
+  { t: "Random split: the model sees neighbours of every test pixel [1]", sub: true },
+  { t: "Date-only split: the model has seen the same locations on other dates [2]", sub: true },
+  "Neither matches the real use: a new date over an area the model has not seen",
+], 0.6, 1.85, 6.3, 4.5, 16);
+heading(s, "What we found", 7.3, 1.35, 5.4, YTEXT);
+bullets(s, [
+  "Holding out the area as well as the date lowered anomaly R² by 0.10 to 0.40, depending on model and holdout shape",
+  "The drop was positive in all 64 combinations of sensor, model and holdout shape we tried",
+  "It also showed up on all 5 Landsat-9 dates, which were fixed before we looked at their temperatures",
+  "The model that looked best on new dates alone was the one that overstated the most",
+], 7.3, 1.85, 5.4, 4.5, 16);
+cite(s, "[1] Roberts et al. 2017   [2] Meyer et al. 2018");
+
+// 4 RQ + contributions
+s = slide("Research questions and contributions", "Introduction");
+heading(s, "Research questions", 0.6, 1.35, 5.9);
+bullets(s, [
+  "RQ1. How much skill survives a geographic holdout within one date?",
+  "RQ2. Does absolute LST transfer across Landsat dates, and does a relative (anomaly) target do better?",
+  "RQ3. How much does date-only testing overstate transfer to a new date and a new area together?",
+  "RQ4. Does that gap hold on a second sensor and for different holdout shapes?",
+  "RQ5. Which planning conclusions survive boundary and threshold uncertainty?",
+], 0.6, 1.85, 5.9, 4.6, 15);
+heading(s, "Contributions", 7.0, 1.35, 5.7);
+bullets(s, [
+  "A cross-sensor check: models trained on 15 Landsat-8 dates, fixed, then tested on 5 Landsat-9 dates",
+  "The gap holds in all 8 holdout shapes, with confidence intervals that resample years and map blocks",
+  "The model favoured by date-only testing (RF with coordinates) overstates the most in all 16 sensor-shape settings",
+  "An honest account of leftover spatial error and of prediction intervals",
+  "Not claimed: a new algorithm, absolute LST forecasting, or intervention effects",
+], 7.0, 1.85, 5.7, 4.6, 15);
+
+// 5 Section
+pres.addSection({ title: "Data and design" });
+s = pres.addSlide({ masterName: "SECTION", sectionTitle: "Data and design" });
+s.addText("Study area, data and design", { placeholder: "title" });
+s.addText("What we used and how the work developed", { placeholder: "body" });
+
+// 6 Study area & data
+s = slide("Study area and data", "Data and design");
+table(s, [
+  ["Item", "Details"],
+  ["Study area", "New Town–Rajarhat (NKDA), Kolkata, about 29.2 km²"],
+  ["Analysis units", "537 hexagons, 250 m, EPSG:32645"],
+  ["Thermal data (development)", "15 Landsat-8 Collection 2 Level-2 scenes, Feb–May, 2018–2026 (8 years) [3]"],
+  ["Thermal data (confirmation)", "5 Landsat-9 Collection 2 Level-2 scenes, 2022–2026, fixed before reading pixels [3]"],
+  ["Predictors", "NDVI, NDBI, MNDWI per hexagon; projected x, y for one model"],
+  ["Target", "LST anomaly = LST − scene mean (scene mean used only to score)"],
+  ["Weather", "ERA5-Land at acquisition time, used in absolute-LST tests only [4]"],
+  ["Planning layers", "OSMnx walk network, 5 service types [5]; WorldPop 2020 population [6]"],
+], 0.6, 1.4, 12.1, [3.4, 8.7], { fontSize: 14, rowH: 0.48 });
+s.addText("Scene selection: 695 catalogue items screened by date window, cloud cover of 25% or less and at least 180 clear hexagons. One 2025 scene failed the check (28 hexagons) and is listed as excluded.", { x: 0.6, y: 5.95, w: 12.1, h: 0.5, fontSize: 12, italic: true, color: GREY, isTextBox: true, margin: 0 });
+cite(s, "[3] USGS Landsat Collection 2 Level-2   [4] Muñoz-Sabater et al. 2021   [5] Boeing 2017   [6] Tatem 2017");
+
+// 7 Roadmap
+s = slide("Experiment roadmap", "Data and design");
+[["Stage 1", "Dashboard and liveability index (starting point)", GREY], ["Stage 2", "Spatial CV, baselines, residual checks", NAVY],
+ ["Stage 3", "Multi-date Landsat; absolute vs relative heat", NAVY], ["Stage 4", "Tested a site-memory correction on new areas", ORANGE],
+ ["Stage 5", "D0–D3 study and Landsat-9 confirmation", NAVY], ["Stage 6", "Holdout-shape checks, replay, planning check", GREEN]].forEach((st, i) => {
+  const x = 0.6 + i * 2.05;
+  s.addShape(pres.shapes.RECTANGLE, { x, y: 1.5, w: 1.85, h: 0.55, fill: { color: st[2] } });
+  s.addText(st[0], { x, y: 1.5, w: 1.85, h: 0.55, fontSize: 15, bold: true, color: st[2] === ORANGE ? NAVY : "FFFFFF", align: "center", valign: "middle", isTextBox: true, margin: 0 });
+  s.addText(st[1], { x, y: 2.15, w: 1.85, h: 1.0, fontSize: 13, color: "3E3426", align: "center", valign: "top", isTextBox: true, margin: 2 });
+});
+heading(s, "What we dropped along the way, and why", 0.6, 3.45, 12);
+table(s, [
+  ["Component", "Reason"],
+  ["Land-cover change 2016–2026", "Built-up 'decline' was implausible; the 99–100% accuracy was circular; only 21–69% agreement with independent maps"],
+  ["Falling surface UHI trend", "Composites differed in scene count and sensor, so the years were not comparable"],
+  ["Pareto / rank-acceptability priority index", "Less stable than plain equal weights (overlap 0.319 vs 0.506)"],
+  ["Site-memory residual correction", "Helped on known sites but lowered R² by 0.053 on unseen areas (p = 0.0078)"],
+], 0.6, 3.95, 12.1, [3.8, 8.3], { fontSize: 13, rowH: 0.42 });
+
+// 8 D0-D3
+s = slide("Validation regimes: D0 to D3", "Data and design");
+table(s, [
+  ["Regime", "Test date seen in training?", "Test area seen in training?", "Standard name"],
+  ["D0", "Yes", "Yes (random 20% of pixels)", "Random CV"],
+  ["D1", "Yes", "No", "Leave-location-out"],
+  ["D2", "No", "Yes", "Leave-time-out"],
+  ["D3", "No", "No", "Leave-location-and-time-out"],
+], 0.6, 1.45, 12.1, [1.5, 3.4, 3.8, 3.4], { fontSize: 15, rowH: 0.5, numeric: true });
+bullets(s, [
+  "D3 is the realistic case: a new date over an area with no labels",
+  "These regimes are not ours. Meyer et al. defined leave-location-out, leave-time-out and leave-location-and-time-out folds [2]",
+  "What we add is the size of the D2 to D3 gap for urban LST, on two sensors and under many holdout shapes",
+  "Spectral features are scaled using unlabelled target imagery only: the whole scene for D2, the held-out area only for D3",
+], 0.6, 4.25, 12.1, 2.2, 16);
+cite(s, "[2] Meyer et al. 2018");
+
+// 9 Models and stats
+s = slide("Models and statistics", "Data and design");
+heading(s, "Models (fixed before the Landsat-9 test)", 0.6, 1.35, 5.8);
+table(s, [
+  ["Model", "Settings"],
+  ["Ridge", "alpha = 10"],
+  ["Random Forest (RF)", "45 trees, min leaf 5"],
+  ["Gradient boosting (HGB)", "80 iterations, min leaf 10"],
+  ["RF + coordinates [7]", "RF plus projected x, y"],
+], 0.6, 1.85, 5.8, [2.9, 2.9], { fontSize: 14, rowH: 0.45 });
+s.addText("We avoid hexagon-level tests because neighbouring hexagons share heat; treating them as independent would make almost any difference look significant.", { x: 0.6, y: 4.3, w: 5.8, h: 1.2, fontSize: 14, italic: true, color: "6B5E4A", isTextBox: true, margin: 0 });
+heading(s, "How we test differences", 6.9, 1.35, 5.8);
+bullets(s, [
+  "Gap = R²(D2) − R²(D3) on the same hexagons, one value per date",
+  "95% CI: bootstrap over years (or Landsat-9 dates), then over 1–2 km blocks",
+  "Exact sign-flip test over 8 years (Landsat-8) or 5 dates (Landsat-9)",
+  "With 5 dates, the smallest possible two-sided p is 0.0625",
+  "Residual Moran's I with 8 neighbours and 499 permutations [8], plus an effective sample size",
+], 6.9, 1.85, 5.8, 4.6, 16);
+cite(s, "[7] Hengl et al. 2018   [8] Moran 1950");
+
+// 10 Section
+pres.addSection({ title: "Results" });
+s = pres.addSlide({ masterName: "SECTION", sectionTitle: "Results" });
+s.addText("Results", { placeholder: "title" });
+s.addText("Within-date skill, temporal transfer, joint shift and confirmation", { placeholder: "body" });
+
+// 11 Within-date
+s = slide("Within one date, random CV already looks too good", "Results");
+s.addChart(pres.charts.BAR, [
+  { name: "Random 5-fold", labels: ["OLS", "Random Forest", "XGBoost", "RF, coordinates only"], values: [0.715, 0.724, 0.744, 0.468] },
+  { name: "Spatial 1 km blocks", labels: ["OLS", "Random Forest", "XGBoost", "RF, coordinates only"], values: [0.683, 0.637, 0.649, 0.082] },
+], { ...chartBase, x: 0.6, y: 1.35, w: 7.4, h: 5.0, barDir: "col", barGapWidthPct: 60, chartColors: [GREY, NAVY], title: "R² for 2026 LST (537 hexagons)", showLegend: true, valAxisMinVal: 0, valAxisMaxVal: 0.8, dataLabelFormatCode: "0.00", valAxisLabelFormatCode: "0.0" });
+bullets(s, [
+  "Tree models lose 0.09–0.10 R² under spatial CV; OLS loses 0.03",
+  "Coordinates alone fall from 0.47 to 0.08. They interpolate; they do not explain",
+  "Tuned RF with coordinates (nested spatial CV): RMSE 0.790 °C, R² 0.616",
+  "Residuals stay clustered: Moran's I 0.37–0.44, p = 0.001",
+  "So we make no claim that ML beats linear regression here",
+], 8.3, 1.5, 4.4, 4.8, 15);
+cite(s, "Spatial blocking as in [1]");
+
+// 12 Absolute vs anomaly
+s = slide("Across dates, absolute LST does not transfer", "Results");
+s.addChart(pres.charts.BAR, [
+  { name: "Mean anomaly R², 15 held-out dates", labels: ["Raw spectral RF", "Normalised RF", "RF + site correction", "Site history average"], values: [0.450, 0.602, 0.737, 0.723] },
+], { ...chartBase, x: 0.6, y: 1.35, w: 6.6, h: 4.9, barDir: "bar", barGapWidthPct: 50, chartColors: [NAVY], title: "Relative heat (anomaly), leave-one-date-out", showLegend: false, valAxisMinVal: 0, valAxisMaxVal: 0.8, dataLabelFormatCode: "0.000", catAxisLabelFontSize: 13 });
+bullets(s, [
+  "The scene mean moves a lot between dates: 37.9 °C in March 2021 and 31.4 °C in March 2026 on the same hexagons",
+  "Even with ERA5-Land weather, the best absolute-LST model had a mean R² of −0.44",
+  "The within-scene pattern (anomaly) is much steadier; all 15 held-out dates gave positive R²",
+  "Per-date normalisation of LST is standard practice [9]; we use it as the target, not as a contribution",
+  "Site history works well because it already knows each location. On a new area there is no history, which is why D3 matters",
+], 7.6, 1.45, 5.1, 5.0, 15);
+cite(s, "[9] Scientific Reports 2026 (Chennai UHI)");
+
+// 13 L8 regimes
+s = slide("Landsat-8: performance by regime", "Results");
+s.addChart(pres.charts.BAR, [
+  { name: "D0 random", labels: ["Ridge", "RF", "HGB", "RF + coords"], values: [0.603, 0.610, 0.573, 0.689] },
+  { name: "D1 new area", labels: ["Ridge", "RF", "HGB", "RF + coords"], values: [0.107, 0.031, -0.014, 0.086] },
+  { name: "D2 new date", labels: ["Ridge", "RF", "HGB", "RF + coords"], values: [0.578, 0.599, 0.602, 0.741] },
+  { name: "D3 new date + area", labels: ["Ridge", "RF", "HGB", "RF + coords"], values: [0.057, 0.080, 0.087, 0.054] },
+], { ...chartBase, x: 0.6, y: 1.35, w: 7.8, h: 5.0, barDir: "col", barGapWidthPct: 40, chartColors: ["B5AA94", "D6CBB5", NAVY, ORANGE], title: "Mean anomaly R², 15 dates, quadrant holdout", showLegend: true, valAxisMinVal: -0.1, valAxisMaxVal: 0.8, dataLabelFormatCode: "0.00", dataLabelFontSize: 9 });
+bullets(s, [
+  "D2 to D3 drop: 0.515 to 0.687 R², depending on model",
+  "Positive for every model; 8-year sign-flip p = 0.0078",
+  "The best D3 R² is only 0.087",
+  "On these dates the ranking flipped: RF with coordinates was best in D2 and worst in D3",
+  "All 15 dates were used while developing the method, so we needed a separate test: Landsat-9",
+], 8.7, 1.5, 4.0, 4.8, 15);
+
+// 14 L9
+s = slide("Landsat-9 confirmation (dates fixed before scoring)", "Results");
+s.addChart(pres.charts.BAR, [
+  { name: "D2 new date", labels: ["Ridge", "RF", "HGB", "RF + coords"], values: [0.562, 0.567, 0.580, 0.749] },
+  { name: "D3 new date + area", labels: ["Ridge", "RF", "HGB", "RF + coords"], values: [0.164, 0.148, 0.138, 0.197] },
+], { ...chartBase, x: 0.6, y: 1.35, w: 7.2, h: 5.0, barDir: "col", barGapWidthPct: 50, chartColors: [NAVY, ORANGE], title: "Mean anomaly R², 5 Landsat-9 dates (trained on Landsat-8 only)", showLegend: true, valAxisMinVal: 0, valAxisMaxVal: 0.8, dataLabelFormatCode: "0.000" });
+table(s, [
+  ["Check", "Outcome"],
+  ["Gap on every date, every model", "Yes (5 of 5)"],
+  ["Equal-date gap range", "0.315 – 0.477"],
+  ["Two-sided p (5 dates)", "0.0625 (lowest possible)"],
+  ["Rank reversal repeated", "No"],
+  ["D3 with whole-scene scaling (RF + coords)", "0.197 → 0.370"],
+], 8.1, 1.5, 4.6, [2.7, 1.9], { fontSize: 13, rowH: 0.5 });
+s.addText("Dates: 2022-03-19, 2023-03-06, 2024-04-25, 2025-03-11, 2026-02-26. All passed the 180-clear-hexagon rule (204–271 each).", { x: 0.6, y: 6.45, w: 12.1, h: 0.35, fontSize: 11, italic: true, color: GREY, isTextBox: true, margin: 0 });
+
+// 15 Geometry robustness
+s = slide("Does the gap depend on how we cut the map?", "Results");
+s.addImage({ path: "fig_optimism_geometries.png", x: 0.6, y: 1.3, w: 9.0, h: 3.78, altText: "Gap between D2 and D3 R² with 95% intervals across eight holdout shapes, Landsat-8 and Landsat-9" });
+bullets(s, [
+  "All 64 average gaps are positive, and every lower 95% bound is at least 0.052",
+  "639 of 640 single-date gaps are positive; the one exception is RF on 15 Feb 2025 with a 1 km buffered split (−0.029)",
+  "Larger blocks and buffers make the gap bigger, as you would expect when fewer nearby pixels leak into training",
+], 9.85, 1.4, 2.9, 3.8, 13);
+bullets(s, [
+  "Shapes tested: 1 km and 2 km blocks, two grid origins, with or without a 500 m buffer",
+  "D2 and D3 were scored on the same hexagons, so each gap is a paired difference",
+], 0.6, 5.3, 12.1, 1.1, 14);
+
+// 16 Gap table
+s = slide("Paired gap with 1 km blocks", "Results");
+table(s, [
+  ["Sensor", "Model", "R² D2", "R² D3", "Gap", "95% CI", "Dates with gap > 0"],
+  ["Landsat-8", "Ridge", "0.578", "0.472", "0.106", "0.071 – 0.149", "15 / 15"],
+  ["Landsat-8", "RF", "0.600", "0.456", "0.144", "0.112 – 0.186", "15 / 15"],
+  ["Landsat-8", "HGB", "0.601", "0.456", "0.145", "0.114 – 0.187", "15 / 15"],
+  ["Landsat-8", "RF + coords", "0.741", "0.482", "0.259", "0.221 – 0.323", "15 / 15"],
+  ["Landsat-9", "Ridge", "0.562", "0.452", "0.110", "0.055 – 0.211", "5 / 5"],
+  ["Landsat-9", "RF", "0.567", "0.420", "0.147", "0.091 – 0.232", "5 / 5"],
+  ["Landsat-9", "HGB", "0.578", "0.410", "0.168", "0.105 – 0.264", "5 / 5"],
+  ["Landsat-9", "RF + coords", "0.749", "0.472", "0.277", "0.190 – 0.445", "5 / 5"],
+], 0.6, 1.4, 12.1, [1.6, 1.9, 1.3, 1.3, 1.3, 2.4, 2.3], { fontSize: 14, rowH: 0.46, numeric: true });
+s.addText("These gaps are smaller than the quadrant gaps (0.52–0.69) because quadrants are large and the fold average gives badly predicted small quadrants a lot of weight. The size of the gap depends on how the map is cut; the direction does not.", { x: 0.6, y: 5.75, w: 12.1, h: 0.7, fontSize: 13, italic: true, color: GREY, isTextBox: true, margin: 0 });
+
+// 17 Model selection
+s = slide("Which model would date-only testing pick?", "Results");
+bullets(s, [
+  "RF with coordinates had the best D2 score in all 16 sensor and holdout-shape settings",
+  "It also had the largest D2 to D3 gap in all 16",
+  "In 9 of the 16 settings (all 8 buffered ones) a different model, Ridge or plain RF, did best under D3",
+  "Our reading: coordinates let the model memorise where it is hot. That helps on known locations, not on new ones [7]",
+  "The site-memory correction we tested earlier behaved the same way: better on known sites, worse on new areas",
+  "RF with coordinates is not always the worst under D3, so we say 'most overstated', not 'worst model'",
+  "Practical point: if a map will be used outside labelled areas, choose the model on D3, not on D2",
+], 0.6, 1.45, 12.1, 5.0, 20);
+cite(s, "[7] Hengl et al. 2018");
+
+// 18 Section
+pres.addSection({ title: "Uncertainty and planning" });
+s = pres.addSlide({ masterName: "SECTION", sectionTitle: "Uncertainty and planning" });
+s.addText("Uncertainty, residuals and planning", { placeholder: "title" });
+s.addText("What we can and cannot say from these maps", { placeholder: "body" });
+
+// 19 Residuals
+s = slide("Residual spatial structure is still there", "Uncertainty and planning");
+s.addChart(pres.charts.BAR, [
+  { name: "Landsat-8", labels: ["Ridge", "RF", "HGB", "RF + coords"], values: [0.465, 0.419, 0.417, 0.368] },
+  { name: "Landsat-9", labels: ["Ridge", "RF", "HGB", "RF + coords"], values: [0.424, 0.395, 0.402, 0.343] },
+], { ...chartBase, x: 0.6, y: 1.35, w: 7.2, h: 4.9, barDir: "col", barGapWidthPct: 50, chartColors: [NAVY, BLUE], title: "Mean Moran's I of D3 residuals (8 nearest neighbours)", showLegend: true, valAxisMinVal: 0, valAxisMaxVal: 0.6, dataLabelFormatCode: "0.00" });
+bullets(s, [
+  "Every date and model: p ≤ 0.002 (499 permutations); values range from 0.22 to 0.63 [8]",
+  "Effective sample size is about 95–124 of the 235–267 hexagons per date",
+  "Coordinates, GP and kNN residual corrections lowered I to 0.30–0.38 at best",
+  "We do not claim to have modelled this. We allow for it in the statistics by resampling blocks",
+  "Likely missing inputs: building height, albedo, anthropogenic heat",
+], 8.1, 1.5, 4.6, 4.8, 14);
+cite(s, "[8] Moran 1950");
+
+// 20 Intervals
+s = slide("Prediction intervals for new areas on new dates", "Uncertainty and planning");
+table(s, [
+  ["Nominal 90%", "Pooled conformal", "Date-cluster conformal"],
+  ["Landsat-8, leave one year out: mean coverage", "0.899", "0.937"],
+  ["Landsat-8, leave one year out: worst date", "0.667", "0.711"],
+  ["Interval width", "3.71 °C", "4.34 °C"],
+  ["Landsat-8 → Landsat-9: mean coverage", "0.887", "0.929"],
+  ["Landsat-8 → Landsat-9: worst date", "0.804", "0.845"],
+], 0.6, 1.45, 7.0, [3.4, 1.8, 1.8], { fontSize: 14, rowH: 0.5, numeric: true });
+s.addImage({ path: "fig_d3_interval_coverage.png", x: 7.9, y: 1.4, w: 4.8, h: 3.2, altText: "Observed against nominal D3 coverage for pooled and date-cluster intervals" });
+bullets(s, [
+  "Split conformal intervals [10], calibrated on Landsat-8 D3 errors only",
+  "Calibrating per date gives better worst-case coverage, but the intervals get wider",
+  "Neither rule reaches 90% on every date, so we report the intervals as approximate",
+], 0.6, 4.75, 12.1, 1.6, 15);
+cite(s, "[10] Lei et al. 2018");
+
+// 21 Planning
+s = slide("Planning check: what survives the boundary error", "Uncertainty and planning");
+s.addChart(pres.charts.BAR, [
+  { name: "Share of dates in hottest 20%", labels: ["Core", "Middle", "Edge"], values: [0.314, 0.137, 0.162] },
+  { name: "15-min access score (0–1)", labels: ["Core", "Middle", "Edge"], values: [0.499, 0.494, 0.291] },
+], { ...chartBase, x: 0.6, y: 1.35, w: 6.0, h: 4.0, barDir: "col", barGapWidthPct: 50, chartColors: [ORANGE, NAVY], title: "Heat persistence vs walking access by zone", showLegend: true, valAxisMinVal: 0, valAxisMaxVal: 0.6, dataLabelFormatCode: "0.00" });
+table(s, [
+  ["Hot on at least half of 15 dates", "All 537 hexes", "640 m-stable core (109)"],
+  ["Persistently hot hexagons", "46", "18"],
+  ["Residents (WorldPop 2020)", "~7,993", "~3,635"],
+  ["Share of population", "8.2%", "18.7%"],
+  ["Hot and reaching at most 1 service", "5–21 hexes", "0"],
+], 6.9, 1.45, 5.8, [2.8, 1.5, 1.5], { fontSize: 13, rowH: 0.5, numeric: true });
+bullets(s, [
+  "Persistent heat sits in the core and survives a 640 m boundary shift",
+  "Poor walking access sits at the edge, exactly where boundary error matters most",
+  "Residents with all five services in reach: 0.0%, 2.2% and 11.9% at 10, 15 and 20 min, so the often-quoted 2.2% depends on the threshold",
+  "We do not recommend targeting joint heat and access areas until an official boundary is available. Walk network [5]; population [6]",
+], 0.6, 5.45, 12.1, 1.35, 13);
+
+// 22 Section
+pres.addSection({ title: "Discussion" });
+s = pres.addSlide({ masterName: "SECTION", sectionTitle: "Discussion" });
+s.addText("Discussion", { placeholder: "title" });
+s.addText("How our numbers compare with published work, and what is left to do", { placeholder: "body" });
+
+// 23 Related work
+s = slide("How this fits with related work", "Discussion");
+table(s, [
+  ["Work", "What it does", "Relation to ours"],
+  ["Roberts et al. 2017 [1]", "Blocked cross-validation for structured data", "Basis for our spatial CV"],
+  ["Meyer et al. 2018 [2]", "Defines leave-location / leave-time / both", "Our D1–D3 follow this; not claimed as new"],
+  ["Ploton et al. 2020 [11]", "Shows random CV overstates biomass maps", "Same problem, different domain"],
+  ["Wadoux et al. 2021 [12]; Linnenbrink et al. 2026 [13]", "Validation should match the use case", "Why D3 is the right test here"],
+  ["Kundu et al. 2026 [14]", "Seasonal LST drivers in New Town, boosting and SHAP", "Closest local study"],
+  ["Mahata et al. 2024 [15]", "New Town land-cover and LST change, 1991–2021", "Local context"],
+], 0.6, 1.4, 12.1, [3.9, 4.0, 4.2], { fontSize: 13, rowH: 0.5 });
+bullets(s, [
+  "In a sample of 8 recent urban LST or air-temperature ML papers, 1 used random validation only, 2 held out dates, and 5 did not state the split. None held out area and date together for LST",
+  "Most were checked from abstracts, so this is an indication, not a survey",
+], 0.6, 5.15, 12.1, 1.35, 14);
+
+// 24 Comparison with published values
+s = slide("Comparison with published results", "Discussion");
+table(s, [
+  ["Study", "Reported result", "Our closest number", "Directly comparable?"],
+  ["Kundu et al. 2026 [14], New Town", "R² up to 0.99 (summer) and 0.96 (winter), boosted trees; split design not stated in the abstract", "Random 5-fold R² 0.72–0.74 (absolute LST); D3 R² 0.05–0.20 (anomaly)", "No: different features and target, split not known"],
+  ["Mahata et al. 2024 [15], New Town", "Built-up share 21.9% → 45.6%, rising LST, 1991–2021", "Our own land-cover trend was dropped after failing an independent check", "Context only"],
+  ["Ploton et al. 2020 [11]", "Random CV much more optimistic than spatial CV for biomass maps", "Within one date, RF R² 0.72 → 0.64 under spatial CV", "Same direction, different domain"],
+  ["Meyer et al. 2018 [2]", "Leave-location-and-time-out scores lower than random CV", "D2 to D3 drop of 0.10–0.40 R²", "Same direction, different domain"],
+], 0.6, 1.4, 12.1, [2.8, 3.6, 3.4, 2.3], { fontSize: 12, rowH: 0.8 });
+bullets(s, [
+  "No published New Town study reports scores for a new date over a new area, so there is no like-for-like benchmark",
+  "A very high R² from a random or unstated split is not evidence that a model will work on an unlabelled area; our D0 vs D3 numbers show how far apart the two can be",
+], 0.6, 5.7, 12.1, 0.9, 14);
+
+// 25 Reproducibility
+s = slide("Reproducibility", "Discussion");
+bullets(s, [
+  "All experiments were re-run in a fresh Python environment from the cached per-hexagon tables",
+  { t: "Development results matched to within 0.005 R²; Landsat-9 model averages to within 0.004", sub: true },
+  { t: "Only gradient boosting drifts slightly between library versions; no conclusion changes", sub: true },
+  "A single shell script rebuilds every table and figure (about 25 minutes on 2 CPUs)",
+  "Package versions are pinned, and all 21 input tables have SHA-256 checksums",
+  "Every number in the report is linked to the table it comes from",
+  "Not re-run: the raw Landsat and ERA5 downloads, which need access to the satellite data servers",
+], 0.6, 1.45, 12.1, 5.0, 20);
+s.addText([
+  { text: "Code and data tables: ", options: { bold: true, color: NAVY } },
+  { text: "https://github.com/Asmi-C/Smart-Cities-and-Urban-Analytics/tree/nkda-implementation1", options: { hyperlink: { url: "https://github.com/Asmi-C/Smart-Cities-and-Urban-Analytics/tree/nkda-implementation1", tooltip: "Project repository" }, color: YTEXT } },
+], { x: 0.6, y: 5.0, w: 12.1, h: 0.45, fontSize: 15, isTextBox: true, margin: 0 });
+
+// 26 Limitations
+s = slide("Limitations and next steps", "Discussion");
+heading(s, "Limitations", 0.6, 1.35, 5.9);
+bullets(s, [
+  "One township only",
+  "The anomaly target needs the observed scene mean, so this is not absolute forecasting",
+  "Residual spatial dependence is not modelled",
+  "Intervals miss 90% coverage on the worst date",
+  "Only 5 confirmation dates",
+  "No ground-measured LST",
+  "Boundary uncertain by about 640 m; one population source; OSM facilities not audited",
+], 0.6, 1.85, 5.9, 4.6, 17);
+heading(s, "Next steps", 7.0, 1.35, 5.7, YTEXT);
+bullets(s, [
+  "Repeat the same fixed protocol in a second city",
+  "Add a spatial-process model for D3 errors, or region-level intervals",
+  "Add building height and albedo to explain the residual clusters",
+  "Use the official NKDA boundary, a fresh OSM extract and a second population layer (GHSL)",
+], 7.0, 1.85, 5.7, 4.6, 17);
+
+// 27 References
+s = slide("References", "Discussion");
+const refs = [
+  "[1] D. R. Roberts et al., \"Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure,\" Ecography, 40, 913–929, 2017.",
+  "[2] H. Meyer, C. Reudenbach, T. Hengl, M. Katurji, T. Nauss, \"Improving performance of spatio-temporal machine learning models using forward feature selection and target-oriented validation,\" Environ. Model. Softw., 101, 1–9, 2018.",
+  "[3] U.S. Geological Survey, Landsat 8–9 OLI/TIRS Collection 2 Level-2 Science Products.",
+  "[4] J. Muñoz-Sabater et al., \"ERA5-Land: a state-of-the-art global reanalysis dataset for land applications,\" Earth Syst. Sci. Data, 13, 4349–4383, 2021.",
+  "[5] G. Boeing, \"OSMnx: New methods for acquiring, constructing, analyzing, and visualizing complex street networks,\" Comput. Environ. Urban Syst., 65, 126–139, 2017.",
+  "[6] A. J. Tatem, \"WorldPop, open data for spatial demography,\" Sci. Data, 4, 170004, 2017.",
+  "[7] T. Hengl et al., \"Random forest as a generic framework for predictive modeling of spatial and spatio-temporal variables,\" PeerJ, 6, e5518, 2018.",
+  "[8] P. A. P. Moran, \"Notes on continuous stochastic phenomena,\" Biometrika, 37, 17–23, 1950.",
+  "[9] \"Examining urban heat island progression in Chennai: temporal insights from 2014 to 2024,\" Scientific Reports, 2026.",
+  "[10] J. Lei et al., \"Distribution-free predictive inference for regression,\" J. Am. Stat. Assoc., 113, 1094–1111, 2018.",
+  "[11] P. Ploton et al., \"Spatial validation reveals poor predictive performance of large-scale ecological mapping models,\" Nat. Commun., 11, 4540, 2020.",
+  "[12] A. M. J.-C. Wadoux, G. B. M. Heuvelink, S. de Bruin, D. J. Brus, \"Spatial cross-validation is not the right way to evaluate map accuracy,\" Ecol. Model., 457, 109692, 2021.",
+  "[13] J. Linnenbrink, J. Nowosad, H. Meyer, \"Moving beyond spatial and random cross-validation in environmental modelling,\" arXiv:2605.13689, 2026.",
+  "[14] Kundu, Mukherjee, Mukhopadhyay, \"Seasonal drivers of urban heat and their implications for sustainable spatial planning: a case study from a rapidly developing city of eastern India,\" Sustain. Cities Soc., 140, 107246, 2026.",
+  "[15] B. Mahata et al., \"Spatiotemporal dynamics of land use/land cover changes and its impact on land surface temperature: a case study in New Town Kolkata,\" Reg. Sustain., 5(2), 100138, 2024.",
+];
+s.addText(refs.map((r, i) => ({ text: r, options: { breakLine: i < refs.length - 1, paraSpaceAfter: 3 } })), { x: 0.6, y: 1.3, w: 12.1, h: 5.55, fontSize: 12, color: "3E3426", valign: "top", isTextBox: true, margin: 0 });
+
+// 28 Close
+pres.addSection({ title: "Close" });
+s = pres.addSlide({ masterName: "TITLE", sectionTitle: "Close" });
+s.addText("Takeaway", { placeholder: "title" });
+s.addText([
+  { text: "Testing our urban heat models on new dates only overstated how well they work on new areas by 0.10–0.40 R²,", options: { breakLine: true } },
+  { text: "on two sensors and every holdout shape we tried. The model that looked best was the most overstated.", options: { breakLine: true } },
+  { text: " ", options: { breakLine: true } },
+  { text: "Thank you. Questions?", options: { bold: true, color: NAVY } },
+], { placeholder: "body" });
+
+(async () => {
+  await pres.writeFile({ fileName: "NKDA_Smart_Cities_Presentation.pptx" });
+  await applyTheme("NKDA_Smart_Cities_Presentation.pptx", THEME);
+  console.log("written");
+})();

@@ -1,0 +1,1 @@
+Existing satellite + OSM + population-derived hex data → feature groups → random/spatial CV and ablation → standardized liveability factors → AHP/equal/perturbed weights → stable priority zones + exploratory intervention types.

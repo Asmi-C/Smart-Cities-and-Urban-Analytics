@@ -1,0 +1,6 @@
+service,network_nearest_distance_source,euclidean_distance_available,paired_circuity_estimated,population_reclassified_estimated,status,reason
+school,canonical_d_school,false,false,false,blocked,No cached school POI coordinates or full walking graph
+health,canonical_d_health,false,false,false,blocked,No cached health POI coordinates or full walking graph
+green,canonical_d_green,false,false,false,blocked,No cached park geometry or full walking graph
+transit,canonical_d_transit,false,false,false,blocked,No cached stop coordinates or full walking graph
+shop,canonical_d_shop,false,false,false,blocked,No cached shop POI coordinates or full walking graph

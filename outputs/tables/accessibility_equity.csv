@@ -1,0 +1,2 @@
+n_hex,population_2020_proxy_total,moran_I_nearest8,moran_permutation_p,unweighted_gini_service_fraction,population_weighted_gini_service_fraction,population_with_zero_of_five_15min,population_with_all_five_15min,population_weighted_service_fraction,spearman_LST_vs_access_deficit,scope
+537,98027.97723036373,0.7435109696104103,0.001,0.38283472147264325,0.34497297526310106,11823.07590188419,2119.3682645348945,0.45842986397728663,-0.287110488305626,CACHED OSM network distances and modelled WorldPop 2020 counts; source POIs not revalidated

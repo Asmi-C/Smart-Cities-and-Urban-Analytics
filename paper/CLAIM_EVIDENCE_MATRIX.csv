@@ -1,0 +1,8 @@
+claim,experiment,result,statistical_evidence,table,figure,limitation
+"Random RF heat CV is optimistic relative to 1-km block","E1","0.725 versus 0.891 C RMSE","Descriptive comparison across different splits","ieee_validation_matrix.csv","05_geographic_stress_test.png","Split and training composition differ"
+"Buffered 2-km CV is more difficult","E2","0.954 C RMSE","Descriptive comparison","ieee_validation_matrix.csv","05_geographic_stress_test.png","Not monotonic across all geographic partitions"
+"Combined RF not demonstrably better than morphology","E3","Delta RMSE +0.016 C","Paired 1-km geographic-block bootstrap 95% CI [-0.092,0.164] C","paired_model_uncertainty.csv","06_nested_ablation.png","Conditional on fixed out-of-fold predictions"
+"RF leaves geographic residual pattern","E5","Residual Moran I 0.439","Permutation p=0.001 with 999 shuffles","residual_spatial_diagnostics.csv","","Moran depends on chosen 8NN weights"
+"Spatial calibration intervals achieve 91.4 percent empirical coverage","E6","Nominal 90 percent; average width 2.930 C","Out-of-fold empirical diagnostic","prediction_uncertainty.csv","07_rank_pareto_uncertainty.png","No distribution-free spatial-shift guarantee"
+"Fifty-eight hexes are stable high concern","E7","58 / 537 at acceptability >=0.8","501 prespecified weighting scenarios","rank_uncertainty_pareto.csv","07_rank_pareto_uncertainty.png","Preference scenarios normative and unvalidated"
+"Thirty-seven stable candidates have narrower intervals","E9","37 / 58","Below-median width threshold","priority_summary.csv","07_rank_pareto_uncertainty.png","No measured intervention outcomes"

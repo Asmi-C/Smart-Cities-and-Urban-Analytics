@@ -1,0 +1,2 @@
+dates,calendar_years,mean_RMSE_reduction_C,dates_better,year_cluster_boot_CI_low_C,year_cluster_boot_CI_high_C,year_cluster_signflip_p,mean_abs_date_bias_meteorology_C
+15,8,1.998312531663822,13,1.517928131732039,2.5490291203756597,0.0078125,1.5417744172818872
