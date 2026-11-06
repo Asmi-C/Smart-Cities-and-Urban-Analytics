@@ -1,0 +1,29 @@
+# Local environment and caches
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# AI working notes: session handoff and the superseded NTPA / LUDCP boundary
+# investigation. Neither is part of the analysis or needed to reproduce it, and both
+# are kept locally only.
+handoff.md
+trashed/
+
+# OSMnx / network cache
+cache/
+*.osm.pbf
+# Windows download artifacts
+*.Zone.Identifier
+*.part
+newtown_outputs.zip
+
+# Chandigarh replication: bulky/regenerable files and NKDA duplicates
+# (NKDA copies live on the nkda-implementation1 branch, byte-identical)
+external_case/data/*.tif
+outputs_nkda_reference/
+external_case/data_nkda_reference/
+data/*_nkda.csv
+data/newtown_boundary_nkda.geojson
+boundary/
