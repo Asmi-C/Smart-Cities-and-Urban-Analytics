@@ -1,0 +1,12 @@
+metric,value,unit,scope,interpretation_limit
+all_537_hexes_population_2020_proxy,98027.977,persons,537 original hexes,WorldPop 2020 model not verified 2026 population
+all_five_services_within_15min_population,2119.368,persons,537 original hexes,Cached OSM walking graph 4.8km/h and five categories
+all_five_services_within_15min_population_share,2.162,percent,537 original hexes,OSM network and source POI completeness unverified
+all_five_services_population_not_within_15min,95908.609,persons,537 original hexes,Does not measure service quality or functional availability
+three_date_common_valid_hexes,207,hexes,March2019 not included; original 2021 2024 2026 intersection,Same geography but independent dates
+persistent_hot_hexes_2021_2024_2026,37,hexes,207 three-date clear hexes,Hottest-quintile in at least two observed dates
+persistent_hot_population_2020_proxy,6801.602,persons,207 three-date clear hexes,2020 population model and satellite QA selection
+persistent_hot_and_low_access_population_2020_proxy,219.084,persons,207 three-date clear hexes,4 hexes; boundary registration uncertainty
+boundary_uncertainty_RMS,640,meters,original official-PDF registration against named points,Not a demonstrated rigid shift or true boundary positional error
+boundary_translation_640m_min_retained,351,hexes,537 original hexes,Does not account for newly included unobserved geography
+boundary_translation_640m_max_retained,408,hexes,537 original hexes,Does not account for newly included unobserved geography

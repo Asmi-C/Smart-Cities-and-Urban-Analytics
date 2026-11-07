@@ -1,0 +1,2 @@
+n_hex,n_dates,n_spatial_blocks,early_late_residual_correlation,naive_hex_p_not_valid_spatially,block_bootstrap_CI_low,block_bootstrap_CI_high,matching_bias_sign_fraction
+283,15,30,0.5845554873409644,2.486245068310894e-27,0.4544932139395886,0.7259669298375855,0.7102473498233216

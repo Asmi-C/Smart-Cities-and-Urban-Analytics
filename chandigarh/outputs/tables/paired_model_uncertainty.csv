@@ -1,0 +1,2 @@
+contrast,scheme,delta_RMSE_C,bootstrap_95_low_C,bootstrap_95_high_C,n_groups,method
+RF combined minus RF morphology,block_1,-0.07263872151951523,-0.1085026987973642,-0.03679576202535521,63,paired block bootstrap of fixed OOF predictions

@@ -1,0 +1,5 @@
+model,D0,D1,D2,D3
+HGB_z,4,4,2,1
+RF_z,2,3,3,2
+RF_z_coords,1,2,1,4
+ridge_z,3,1,4,3

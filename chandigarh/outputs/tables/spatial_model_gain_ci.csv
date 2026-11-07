@@ -1,0 +1,2 @@
+comparison,delta_RMSE_C,bootstrap_low_95_C,bootstrap_high_95_C,method
+RF + coordinates minus RF,-0.058510555460242086,-0.07737825788384368,-0.038819015937506626,1km geographic-block bootstrap of fixed out-of-fold predictions

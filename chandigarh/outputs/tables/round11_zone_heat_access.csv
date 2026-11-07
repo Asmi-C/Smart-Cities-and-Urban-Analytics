@@ -1,0 +1,4 @@
+zone,hexes,mean_score15,mean_hot_freq,pop
+Core,302,0.818,0.187,144283.669
+Edge,302,0.689,0.229,139239.236
+Middle,302,0.803,0.186,164780.393

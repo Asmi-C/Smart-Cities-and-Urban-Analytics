@@ -1,0 +1,4 @@
+test_year,n_hex,n_geographic_blocks,block_bootstrap_draws,anomaly_R2,conditional_bootstrap_R2_lower_95,conditional_bootstrap_R2_upper_95,anomaly_Spearman,conditional_bootstrap_Spearman_lower_95,conditional_bootstrap_Spearman_upper_95,warning
+2021,207,24,1500,-0.11265643317737584,-0.8356146273120161,0.2882097706392172,0.5782885330813589,0.36969621254298,0.7433563229053528,Frozen-prediction geography bootstrap; not uncertainty across unseen dates
+2024,207,24,1500,0.6316671780835141,0.46791105853970344,0.7247470929365608,0.7542008961911875,0.6292398678363867,0.8389856903289249,Frozen-prediction geography bootstrap; not uncertainty across unseen dates
+2026,207,24,1500,0.28758712607947623,-0.002802412572037471,0.3977901307220081,0.6207328094727841,0.480302969697365,0.7086951790686042,Frozen-prediction geography bootstrap; not uncertainty across unseen dates

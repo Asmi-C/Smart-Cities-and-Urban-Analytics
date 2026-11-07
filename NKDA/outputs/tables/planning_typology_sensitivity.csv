@@ -1,0 +1,5 @@
+access_quantile,population_quantile,n_type_A,estimated_population_2020_type_A,note
+0.2,0.5,0,0.0,Threshold sensitivity only; no verified intervention feasibility
+0.2,0.75,0,0.0,Threshold sensitivity only; no verified intervention feasibility
+0.4,0.5,0,0.0,Threshold sensitivity only; no verified intervention feasibility
+0.4,0.75,0,0.0,Threshold sensitivity only; no verified intervention feasibility

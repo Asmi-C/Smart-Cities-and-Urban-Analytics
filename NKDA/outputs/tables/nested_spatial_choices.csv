@@ -1,0 +1,6 @@
+outer_fold,chosen_config,inner_mean_RMSE_C,outer_RMSE_C
+0,"{'min_samples_leaf': 3, 'max_features': 1.0, 'max_depth': None}",0.7041572745359801,0.9001592120028465
+1,"{'min_samples_leaf': 3, 'max_features': 0.6, 'max_depth': 8}",0.7662547762325783,0.9669806444409026
+2,"{'min_samples_leaf': 3, 'max_features': 0.6, 'max_depth': 8}",0.8722073083448016,0.7387052072523684
+3,"{'min_samples_leaf': 3, 'max_features': 0.6, 'max_depth': 8}",0.9321755582800199,0.6136644921707216
+4,"{'min_samples_leaf': 3, 'max_features': 0.6, 'max_depth': None}",0.8013619204968526,0.6680788846741879

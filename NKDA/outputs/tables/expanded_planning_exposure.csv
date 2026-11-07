@@ -1,0 +1,4 @@
+group,n_hex,worldpop_2020_model_people,source_dates,warning
+all_observed_units,311,49986.66180676478,15,"Only modelled 2020 population, unverified OSM cache, ~640m boundary fit RMS"
+persistent_hot_over_half_dates,46,7993.256168739469,15,"Only modelled 2020 population, unverified OSM cache, ~640m boundary fit RMS"
+persistent_hot_and_cached_poor_access,6,288.2288859348671,15,"Only modelled 2020 population, unverified OSM cache, ~640m boundary fit RMS"

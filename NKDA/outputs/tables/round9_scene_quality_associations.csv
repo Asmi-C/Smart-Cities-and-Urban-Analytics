@@ -1,0 +1,13 @@
+metric,acquisition_attribute,n_dates,Spearman_rho,exploratory_p
+Baseline,scene_cloud_pct,15,0.5607142857142856,0.02967649609447474
+Baseline,fraction_hex_complete,15,0.48479505121181626,0.0670187711744731
+Baseline,mean_LST_C,15,0.7464285714285712,0.001391411089063054
+Baseline,median_clear_pixels_per_hex,15,,
+Proposed,scene_cloud_pct,15,0.43214285714285705,0.1076930375463979
+Proposed,fraction_hex_complete,15,0.5545626047072436,0.03191489539146207
+Proposed,mean_LST_C,15,0.5928571428571427,0.019846421970181147
+Proposed,median_clear_pixels_per_hex,15,,
+delta_R2,scene_cloud_pct,15,-0.7464285714285712,0.001391411089063054
+delta_R2,fraction_hex_complete,15,-0.2951704186345006,0.2855012282353919
+delta_R2,mean_LST_C,15,-0.8642857142857141,3.243373143346799e-05
+delta_R2,median_clear_pixels_per_hex,15,,

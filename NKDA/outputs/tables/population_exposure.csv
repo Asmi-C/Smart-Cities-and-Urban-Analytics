@@ -1,0 +1,6 @@
+class,n_hex,estimated_population_2020,population_share,population_weighted_mean_LST_C,data_limitation
+All analyzed hexes,537,98027.97723036373,1.0,35.00184000823425,"WorldPop 2020 proxy, not independently calibrated against 2026 residents"
+Top-quintile satellite LST,108,20687.09002702376,0.21103250940708004,36.36395441308832,"WorldPop 2020 proxy, not independently calibrated against 2026 residents"
+Bottom-quintile access score,204,31935.89400308272,0.32578346412304343,34.52925460922291,"WorldPop 2020 proxy, not independently calibrated against 2026 residents"
+Both high heat and low access,29,4295.598286497827,0.04382012572189732,36.47843571536978,"WorldPop 2020 proxy, not independently calibrated against 2026 residents"
+High policy-acceptability priority,58,9884.567427276163,0.10083414660334807,35.84154833589126,"WorldPop 2020 proxy, not independently calibrated against 2026 residents"

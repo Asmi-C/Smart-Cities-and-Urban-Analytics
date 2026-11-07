@@ -1,0 +1,2 @@
+n_comparisons,n_offsets,n_seeds,mean_delta_RMSE_C,median_delta_RMSE_C,offset_bootstrap_low_95_C,offset_bootstrap_high_95_C,n_coordinate_better,fraction_coordinate_better,n_coordinate_lower_Moran,mean_RF_RMSE_C,mean_RF_coordinates_RMSE_C
+24,12,2,-0.06276688365735415,-0.0637184775270831,-0.06741744644647797,-0.05769587740628875,24,1.0,24,0.8042876889669156,0.7415208053095615

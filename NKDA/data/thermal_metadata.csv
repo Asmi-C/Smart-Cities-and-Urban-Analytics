@@ -1,0 +1,4 @@
+year,acquisition_date,satellite,sensor,processing_level,cloud_percentage_scene,season,spatial_resolution_m,temperature_retrieval,source_item_id
+2021,2021-03-24T04:31:12.401872Z,Landsat 8,OLI/TIRS,Collection 2 Level-2,6.78,pre-monsoon March,30,USGS ST_B10 scale 0.00341802 offset 149 K; QA_PIXEL masked,LC08_L2SP_138045_20210324_02_T1
+2024,2024-04-01T04:31:00.689430Z,Landsat 8,OLI/TIRS,Collection 2 Level-2,0.02,pre-monsoon March,30,USGS ST_B10 scale 0.00341802 offset 149 K; QA_PIXEL masked,LC08_L2SP_138045_20240401_02_T1
+2026,2026-03-22T04:31:09.830044Z,Landsat 8,OLI/TIRS,Collection 2 Level-2,8.51,pre-monsoon March,30,USGS ST_B10 scale 0.00341802 offset 149 K; QA_PIXEL masked,LC08_L2SP_138045_20260322_02_T1
