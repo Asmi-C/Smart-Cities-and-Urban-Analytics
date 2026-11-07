@@ -1,0 +1,4 @@
+claim,claim_type,source,script,dataset,result_file,figure,verified,notes
+Best spatial-CV RMSE,VERIFIED RESULT,existing NKDA hex export,run_research_pipeline.py,hex_results.gpkg,outputs/tables/spatial_cv_results.csv,outputs/PPT_FIGURES/01_spatial_cv.png,true,"1 km GroupKFold, target satellite-derived LST"
+Priority weight stability,VERIFIED RESULT,existing NKDA hex export,run_research_pipeline.py,hex_results.gpkg,outputs/tables/intervention_priority.csv,outputs/PPT_FIGURES/03_intervention_map.png,true,"Scenario analysis, not intervention effectiveness"
+Temporal LULC trends,LIMITED RESULT,existing GEE run,src/newtown_smart_city_analysis.py,lulc_2016/2021/2026.tif,outputs/tables/lulc_areas.csv,outputs/figures/03_lulc_areas.png,false,Independent reference disagreement and differing Sentinel processing levels

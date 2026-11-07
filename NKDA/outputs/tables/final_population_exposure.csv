@@ -1,0 +1,9 @@
+group,n_hex,estimated_population_2020,population_source
+all_537_2020_original_hexes,537,98027.97723036373,original WorldPop 2020 hex proxy
+2026_original_composite_hottest_quintile,108,20687.09002702376,original WorldPop 2020 hex proxy
+2026_original_low_access_quintile,204,31935.89400308272,original WorldPop 2020 hex proxy
+2026_original_joint_heat_access,29,4295.598286497827,original WorldPop 2020 hex proxy
+2021_2024_2026_common_clear_hexes,207,32669.36368224761,original WorldPop 2020 hex proxy
+persistent_hot_2of3,37,6801.6022340082645,original WorldPop 2020 hex proxy
+persistent_hot_plus_low_access,4,219.0838797943265,original WorldPop 2020 hex proxy
+2026_new_hot_only,6,927.2616309147255,original WorldPop 2020 hex proxy

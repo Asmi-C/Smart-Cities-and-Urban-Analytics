@@ -1,0 +1,22 @@
+category,experiment,model_or_method,RMSE_C,MAE_C,R2,residual_Moran_I,p,other_result,limitation
+spatial_model,1km_block,RF,0.891328,0.682278,0.510656,0.439401,0.001,,Autocorrelation remains
+spatial_model,1km_block,RF_plus_coordinates,0.820055,0.610939,0.585786,0.383291,0.001,,Coordinates do not prove causality
+spatial_model,1km_block,RF_plus_context_coordinates,0.841795,0.622119,0.563533,0.375272,0.001,,Autocorrelation remains
+spatial_model,1km_block,RF_plus_residual_kernel,0.880460,0.654378,0.522517,0.363493,0.001,,Inner geographically cross-fit residuals
+spatial_model,1km_block,RF_plus_residual_KNN,0.903724,0.672230,0.496951,0.309746,0.001,,Lower Moran but higher RMSE
+geographic_transfer,eastern_20pct_internal,RF,0.999589,0.856438,0.359531,,,114 test hexes,Not external or temporal validation
+geographic_transfer,eastern_20pct_internal,RF_plus_coordinates,0.843834,0.688880,0.543576,,,114 test hexes,Region had influenced earlier exploration
+priority_robustness,300_unseen_weight_scenarios,Proposed_Pareto_acceptability_interval,,,,,,retention=0.885586;Jaccard=0.318821,No observed interventions
+priority_robustness,300_unseen_weight_scenarios,Equal_weight,,,,,,retention=0.941892;Jaccard=0.505907,Weighted objective surrogate
+priority_robustness,300_unseen_weight_scenarios,AHP_proxy,,,,,,retention=0.833514;Jaccard=0.420753,Three-dimension AHP proxy
+priority_robustness,300_unseen_weight_scenarios,Fixed_weight,,,,,,retention=0.941261;Jaccard=0.489321,Preference choice arbitrary
+spatial_model,nested_1km_block,RF_coordinates_inner_geographic_tuned,0.789758,0.606039,0.615827,0.368602,0.001,,Residual spatial dependence remains significant
+spatial_model,1km_block,RF_coordinates_crossfit_Matern_GP,0.831047,,,0.304119,0.001,,Lower Moran but worse RMSE relative to coordinate RF
+temporal_same_period,2021_geographic_CV,RF_three_indices,0.916672,0.731221,0.631677,0.468826,0.001,207 common clear hexes,Same-area source-period CV
+temporal_same_period,2026_geographic_CV,RF_three_indices,1.252793,1.024765,0.271930,0.331923,0.001,207 common clear hexes,Same-area target-period CV
+independent_temporal,2021_to_2026,RF_frozen,4.435837,4.276281,-8.127792,0.378738,0.001,207 common clear hexes,Independent temporal transfer fails
+independent_temporal,2026_to_2021,RF_frozen,5.422116,5.317704,-11.886609,0.516932,0.001,207 common clear hexes,Independent temporal transfer fails
+independent_temporal,2024_to_2026,RF_frozen,7.920900,7.833046,-28.104732,0.202380,0.001,207 common clear hexes,Independent temporal transfer fails
+independent_temporal,2021plus2024_to_2026,RF_frozen,7.373287,7.273542,-24.219517,0.203977,0.001,414 training period-hex records,Independent temporal transfer fails
+planning_exposure,2020_worldpop_proxy_high_heat,screening_only,,,,,,estimated_population=20687;hexes=108,WorldPop 2020 not verified 2026 population
+planning_exposure,2020_worldpop_proxy_heat_plus_low_access,screening_only,,,,,,estimated_population=4296;hexes=29,No parcel feasibility or costs

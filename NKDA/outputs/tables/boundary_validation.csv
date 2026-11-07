@@ -1,0 +1,2 @@
+comparison,source_A,source_B,area_A_km2,area_B_km2,centroid_displacement_m,intersection_over_union,symmetric_difference_km2,independent_registration_validation,registration_RMS_m_reported,registration_max_anchor_residual_m_reported,interpretation
+same_geometry_files,data/newtown_boundary.geojson,outputs/data/boundary.geojson,29.241994,29.241994,0,1.0,0,false,640,962,Files identical; no independently georeferenced reference available

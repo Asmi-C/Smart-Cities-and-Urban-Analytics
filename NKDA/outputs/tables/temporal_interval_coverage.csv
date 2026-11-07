@@ -1,0 +1,7 @@
+train_period,test_period,nominal_coverage,empirical_coverage,mean_width_C,calibration,guarantee
+2021,2026,0.8,0.004830917874396135,2.4495239624645393,spatial OOF errors in source period,No formal exchangeability under temporal shift
+2021,2026,0.9,0.014492753623188406,3.102798214873502,spatial OOF errors in source period,No formal exchangeability under temporal shift
+2021,2026,0.95,0.01932367149758454,3.6865584502966158,spatial OOF errors in source period,No formal exchangeability under temporal shift
+2026,2021,0.8,0.0,2.959472834798966,spatial OOF errors in source period,No formal exchangeability under temporal shift
+2026,2021,0.9,0.0,4.037306550886271,spatial OOF errors in source period,No formal exchangeability under temporal shift
+2026,2021,0.95,0.0,5.34891634212709,spatial OOF errors in source period,No formal exchangeability under temporal shift

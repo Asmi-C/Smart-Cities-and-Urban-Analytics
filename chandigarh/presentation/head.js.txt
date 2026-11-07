@@ -1,0 +1,85 @@
+const pptxgen = require("pptxgenjs");
+const { applyTheme } = require("/root/.claude/skills/synced/1f03b829-060f-41e7-bc02-b989571b796d_36c0a781-e39a-4c42-afa2-7176ab48e2c4/pptx/scripts/apply_theme.js");
+
+const THEME = {
+  name: "NKDA Heat",
+  headFontFace: "Calibri", bodyFontFace: "Calibri",
+  colors: { dk1: "000000", lt1: "FFFFFF", dk2: "5B4B33", lt2: "F0EADF",
+    accent1: "5B4B33", accent2: "F2B705", accent3: "7D8B4E", accent4: "8C7F69", accent5: "A39270", accent6: "F2B705",
+    hlink: "0563C1", folHlink: "954F72" },
+};
+const NAVY = "5B4B33", ORANGE = "F2B705", YTEXT = "C99700", GREEN = "7D8B4E", GREY = "8C7F69", BLUE = "A39270", LIGHT = "E8E0D0", GRID = "D6CBB5", BG = "F0EADF", ROW = "F7F3EC";
+
+const pres = new pptxgen();
+pres.layout = "LAYOUT_WIDE"; // 13.33 x 7.5
+pres.theme = { headFontFace: "Calibri", bodyFontFace: "Calibri" };
+pres.title = "Date-only validation overstates urban heat model transfer";
+pres.author = "GIS Term Project, IIT Kharagpur";
+const C = pres.SchemeColor;
+
+pres.defineSlideMaster({
+  title: "TITLE",
+  background: { color: BG },
+  objects: [
+    { placeholder: { options: { name: "title", type: "title", x: 0.8, y: 2.2, w: 11.7, h: 1.6, fontSize: 38, bold: true, color: NAVY, valign: "bottom", align: "left", fontFace: "Cambria" }, text: "" } },
+    { placeholder: { options: { name: "body", type: "body", x: 0.8, y: 4.0, w: 11.7, h: 1.6, fontSize: 18, color: "6B5E4A", valign: "top" }, text: "" } },
+  ],
+});
+pres.defineSlideMaster({
+  title: "SECTION",
+  background: { color: BG },
+  objects: [
+    { placeholder: { options: { name: "title", type: "title", x: 0.8, y: 2.8, w: 11.7, h: 1.2, fontSize: 36, bold: true, color: NAVY, align: "left", fontFace: "Cambria" }, text: "" } },
+    { placeholder: { options: { name: "body", type: "body", x: 0.8, y: 4.0, w: 11.7, h: 0.8, fontSize: 18, color: "6B5E4A" }, text: "" } },
+  ],
+  slideNumber: { x: 12.3, y: 6.95, w: 0.6, h: 0.35, fontSize: 11, color: "6B5E4A" },
+});
+pres.defineSlideMaster({
+  title: "CONTENT",
+  background: { color: BG },
+  objects: [
+    { placeholder: { options: { name: "title", type: "title", x: 0.6, y: 0.35, w: 12.1, h: 0.85, fontSize: 30, bold: true, color: NAVY, valign: "middle", align: "left" }, text: "" } },
+    { text: { text: "NKDA urban heat | GIS term project", options: { x: 0.6, y: 6.95, w: 6, h: 0.35, fontSize: 10, color: GREY } } },
+  ],
+  slideNumber: { x: 12.3, y: 6.95, w: 0.6, h: 0.35, fontSize: 10, color: GREY },
+});
+
+// helpers ---------------------------------------------------------------
+function slide(title, section) {
+  const s = pres.addSlide({ masterName: "CONTENT", sectionTitle: section });
+  s.addText(title, { placeholder: "title" });
+  return s;
+}
+function bullets(s, items, x, y, w, h, size = 16) {
+  const arr = items.map((it, i) => {
+    const sub = typeof it === "object" && it.sub;
+    const t = typeof it === "object" ? it.t : it;
+    return { text: t, options: { bullet: sub ? { indent: 18 } : true, indentLevel: sub ? 1 : 0, fontSize: sub ? size - 2 : size, color: sub ? "6B5E4A" : "3E3426", breakLine: i < items.length - 1, paraSpaceAfter: 6 } };
+  });
+  s.addText(arr, { x, y, w, h, valign: "top", isTextBox: true, margin: 4 });
+}
+function stat(s, x, y, w, value, label, color = NAVY) {
+  s.addShape(pres.shapes.RECTANGLE, { x, y, w, h: 1.35, fill: { color: LIGHT }, line: { color: LIGHT } });
+  s.addText(value, { x: x + 0.15, y: y + 0.08, w: w - 0.3, h: 0.7, fontSize: 30, bold: true, color, isTextBox: true, margin: 0 });
+  s.addText(label, { x: x + 0.15, y: y + 0.78, w: w - 0.3, h: 0.5, fontSize: 12, color: "6B5E4A", isTextBox: true, margin: 0, valign: "top" });
+}
+function table(s, rows, x, y, w, colW, opts = {}) {
+  const fs = opts.fontSize || 13;
+  const data = rows.map((r, i) => r.map((c, j) => ({
+    text: String(c),
+    options: i === 0 ? { bold: true, color: "FFFFFF", fill: { color: NAVY }, fontSize: fs, align: (j === 0 || !opts.numeric) ? "left" : "center" }
+      : { color: "3E3426", fill: { color: i % 2 ? ROW : LIGHT }, fontSize: fs, align: (j === 0 || !opts.numeric) ? "left" : "center", bold: opts.boldRow === i },
+  })));
+  s.addTable(data, { x, y, w, colW, border: { type: "solid", pt: 0.5, color: GRID }, rowH: opts.rowH || 0.38, valign: "middle", margin: 0.05 });
+}
+function note(s, text, y = 6.45) {
+  s.addText(text, { x: 0.6, y, w: 12.1, h: 0.4, fontSize: 11, italic: true, color: GREY, isTextBox: true, margin: 0 });
+}
+const chartBase = {
+  catAxisLabelFontFace: "+mn-lt", valAxisLabelFontFace: "+mn-lt", dataLabelFontFace: "+mn-lt", titleFontFace: "+mn-lt", legendFontFace: "+mn-lt",
+  catAxisLabelColor: "5B4B33", valAxisLabelColor: "5B4B33", catAxisLabelFontSize: 12, valAxisLabelFontSize: 11,
+  valGridLine: { color: "D6CBB5", size: 0.5 }, catGridLine: { style: "none" },
+  showValue: true, dataLabelFontSize: 11, dataLabelColor: "5B4B33", titleFontSize: 14, titleColor: "5B4B33", showTitle: true,
+  legendFontSize: 11, legendPos: "b",
+};
+

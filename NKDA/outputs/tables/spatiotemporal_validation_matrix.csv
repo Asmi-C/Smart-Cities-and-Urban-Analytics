@@ -1,0 +1,9 @@
+training_regime,geographic_holdout,temporal_holdout,target,n_dates_tested,RMSE_mean_C,R2_mean,scope
+random_5fold_original_537,False,False,absolute_C,1,0.725,0.676,original 537-hex same period; see original spatial test tables
+spatial_1km_original_537,True,False,absolute_C,1,0.891328,0.510656,original 537-hex same period; see original spatial test tables
+spatial_2km_original_537,True,False,absolute_C,1,0.914,0.485,original 537-hex same period; see original spatial test tables
+buffered_1km_original_537,True,False,absolute_C,1,0.929,0.469,original 537-hex same period; see original spatial test tables
+six_date_heldout_date,False,True,absolute_C,6,3.6901657603004643,-5.3930642372960165,variable per-date clear hex support; target mean only evaluation
+six_date_heldout_date,False,True,mean_anomaly_C,6,1.2293949098293846,0.44459940483165167,variable per-date clear hex support; target mean only evaluation
+six_date_plus_1km_unseen_geo_blocks,True,True,absolute_C,6,3.7339216708877117,-5.489053430135589,source-date labels outside each test-date 1km test block only
+six_date_plus_1km_unseen_geo_blocks,True,True,mean_anomaly_C,6,1.2516897326244112,0.42383582973898076,source-date labels outside each test-date 1km test block only

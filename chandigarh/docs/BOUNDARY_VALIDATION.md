@@ -1,0 +1,11 @@
+# NKDA boundary validation and unresolved positional error
+
+**Critical result: the 640 m reported RMS registration residual is real in the source reconstruction, but there is no independently georeferenced boundary against which to calculate a true boundary-position error.** It must not be mistaken for a measured 640 m uniform shift.
+
+`tools/nkda_boundary.py` reconstructs a dashed line from the official planning-area PDF; the original sheet lacks geospatial coordinate control. Scale uses the officially described 29.34 km² area; rotation and translation are fitted against five OSM place-label anchors rather than cadastral control points. The README states the five-anchor RMS is **640 m**, largest individual residual **962 m**. Label-anchor uncertainty cannot unambiguously determine the shape's correct position. A rigid shift based on unverified anchors would be arbitrary and would not scientifically correct the boundary.
+
+Both `data/newtown_boundary.geojson` and `outputs/data/boundary.geojson` were independently loaded, projected to EPSG:32643 and made topology-valid for comparison. They are **the same**, not two independent boundary sources: equal area **29.241994 km²**, centroid difference **0 m**, intersection-over-union **1.000**, symmetric difference **0 km²**. Their agreement does not validate actual georeferencing. The source geometry needed topology repair before overlay, another caution for cadastral-scale interpretation.
+
+**Impact:** 250-m hexagon/street-level planning claims remain geolocation-uncertain. We cannot quantify affected edge hexes relative to an authoritative alternative without actually obtaining such a boundary. The newly generated population and accessibility tables deliberately use the unchanged canonical 537 hex geometry and retain the 640-m reported RMS caveat. Do not issue parcel-level recommendations or reproject with guessed offsets.
+
+**Required independent resolution:** obtain statutory survey coordinates / officially georeferenced mouza plot boundaries / control points through NKDA or HIDCO, verify CRS and publication date, and compute overlaps, displacement and affected units against that truly independent geometry. The official PDF drawing alone is insufficient for that test.

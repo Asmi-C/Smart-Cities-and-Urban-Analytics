@@ -1,0 +1,25 @@
+claim,value,file,status
+L9 frozen D2 R2 range (quadrant),0.562-0.749,outputs/tables/round10_landsat9_confirmatory.csv,confirmatory (R10)
+L9 frozen D3 R2 range (quadrant held-region),0.138-0.197,outputs/tables/round10_landsat9_confirmatory.csv,confirmatory (R10)
+L8 quadrant D2-D3 gap range,0.515-0.687 (year p=0.0078),outputs/tables/domain_shift_model_matrix.csv; validation_optimism.csv,development
+All 64 mean paired gaps positive,0.102-0.400,outputs/tables/round11_optimism_summary.csv,robustness (R11)
+Minimum two-way bootstrap lower bound,0.052,outputs/tables/round11_optimism_summary.csv,robustness (R11)
+Acquisition-level gaps positive,639/640; exception RF 2025-02-15 1km buffered -0.029,outputs/tables/round11_paired_optimism.csv,robustness (R11)
+RF+coords best D2 and largest gap,16/16 settings,outputs/tables/round11_optimism_summary.csv,robustness (R11)
+Best D3 model differs from best D2,9/16 (all 8 buffered),outputs/tables/round11_optimism_summary.csv,robustness (R11)
+D3 residual Moran I range,0.217-0.630 all p<=0.002,outputs/tables/round11_residual_moran.csv,diagnostic (R11)
+Effective n,about 95-124 of 235-267,outputs/tables/round11_residual_moran.csv,diagnostic (R11)
+90% interval LOYO pooled mean/worst,0.899/0.667 width 3.71C,outputs/tables/round11_interval_coverage.csv,R11
+90% interval LOYO date-cluster mean/worst,0.937/0.711 width 4.34C,outputs/tables/round11_interval_coverage.csv,R11
+90% interval L8->L9 pooled vs date-cluster worst,0.804 vs 0.845,outputs/tables/round11_interval_coverage.csv,second look (exploratory)
+Whole-scene normalisation L9 D3 RF+coords,0.197 -> 0.370,outputs/tables/round10_landsat9_confirmatory.csv; docs/ROUND10_FINAL_GATE.md,R10
+D3 error decomposition,date <=0.5%; region|date 6-13%; interaction 7-9%; within 78-88%,outputs/tables/error_variance_decomposition.csv,R10
+Absolute LST transfer fails,mean R2 -0.441 with ERA5-Land,outputs/tables/meteorology_ablation.csv,R8
+Clean replay agreement,dev <=0.0053 R2 max cell; L9 model means <=0.004,docs/ROUND11_CLEAN_REPLAY.md,R11
+Persistent hot hexes (>=0.5) all 537,46 hexes ~7993 residents 8.2%,outputs/tables/round11_persistent_heat_boundary_robustness.csv,R11 planning
+Persistent hot hexes in 640m-stable interior,18 of 109 ~3635 residents 18.7%,outputs/tables/round11_persistent_heat_boundary_robustness.csv,R11 planning
+Mean hot frequency by zone,core 0.31 edge 0.16 middle 0.14,outputs/tables/round11_zone_heat_access.csv,R11 planning
+Mean 15-min score by zone,edge 0.29 core 0.50 middle 0.49,outputs/tables/accessibility_by_zone.csv,existing
+All-five-services share by walk threshold,0.0% / 2.2% / 11.9% (10/15/20 min),outputs/tables/round11_access_threshold_sensitivity.csv,R11 planning
+At-most-one-service share by walk threshold,60.4% / 32.6% / 12.0%,outputs/tables/round11_access_threshold_sensitivity.csv,R11 planning
+Joint hot+poor-access screen,5-21 hexes across 9 variants; 5 robust (~229 residents); 0 inside 640m-stable interior,outputs/tables/round11_planning_screen_sensitivity.csv; round11_planning_screen_profiles.csv,R11 planning

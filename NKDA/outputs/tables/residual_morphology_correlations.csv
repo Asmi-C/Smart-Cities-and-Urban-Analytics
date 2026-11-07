@@ -1,0 +1,8 @@
+feature,n_hex,Spearman_residual_bias,naive_p_not_spatially_valid,warning
+f_built,283,0.11856921695773671,0.04627787868239376,"2026-era original static layers; descriptive only, not verified historical morphology"
+f_veg,283,-0.16312162671572694,0.0059516939047699075,"2026-era original static layers; descriptive only, not verified historical morphology"
+f_water,283,0.08193918763571433,0.16924240758689532,"2026-era original static layers; descriptive only, not verified historical morphology"
+d_built,283,-0.3548183684264247,8.067382978541517e-10,"2026-era original static layers; descriptive only, not verified historical morphology"
+NDBI,283,0.13298269430128626,0.025275953838452558,"2026-era original static layers; descriptive only, not verified historical morphology"
+NDVI,283,-0.12639524085343576,0.033551803252290534,"2026-era original static layers; descriptive only, not verified historical morphology"
+MNDWI,283,0.10090102300896574,0.09022127682757693,"2026-era original static layers; descriptive only, not verified historical morphology"

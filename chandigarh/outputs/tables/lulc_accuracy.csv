@@ -1,0 +1,4 @@
+Year,Imagery,Overall accuracy (%),Kappa,Agreement with Dynamic World (%),Agreement with ESA WorldCover 2021 (%)
+2016,"4 Sentinel-2 scenes, 2015-11-01 to 2016-03-01 (L1C top-of-atmosphere)",93.31896551724138,0.9108168098905052,72.82343687779493,
+2021,"29 Sentinel-2 scenes, 2020-11-01 to 2021-03-01 (L2A surface reflectance)",97.88583509513742,0.971738584897769,76.4736896241252,72.46954428048286
+2026,"37 Sentinel-2 scenes, 2025-11-01 to 2026-03-01 (L2A surface reflectance)",97.13701431492842,0.9617879190435259,75.95926140185813,
